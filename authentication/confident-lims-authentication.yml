@@ -1,0 +1,43 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/confident-lims-clients-openapi.json, openapi/confident-lims-common-openapi.json,
+  openapi/confident-lims-labs-openapi.json
+docs: https://confidentlims.readme.io/reference/authentication
+model: API key + HMAC-SHA256 request signing. Three headers required on every request; the
+  timestamp must be within 30 seconds of server time (replay protection). API key + secret are
+  issued from account settings; the API is free for approved integration partners.
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: X-ConfidentCannabis-APIKey
+  description: API key for authentication. Required for all requests.
+  sources:
+  - openapi/confident-lims-clients-openapi.json
+  - openapi/confident-lims-common-openapi.json
+  - openapi/confident-lims-labs-openapi.json
+- name: SignatureAuth
+  type: apiKey
+  in: header
+  parameter: X-ConfidentCannabis-Signature
+  description: HMAC SHA256 signature of the request. Required if signing is enabled for your
+    API credentials.
+  sources:
+  - openapi/confident-lims-clients-openapi.json
+  - openapi/confident-lims-common-openapi.json
+  - openapi/confident-lims-labs-openapi.json
+- name: TimestampAuth
+  type: apiKey
+  in: header
+  parameter: X-ConfidentCannabis-Timestamp
+  description: Unix timestamp of the request. Required if signing is enabled. Must be within
+    30 seconds of server time.
+  sources:
+  - openapi/confident-lims-clients-openapi.json
+  - openapi/confident-lims-common-openapi.json
+  - openapi/confident-lims-labs-openapi.json
