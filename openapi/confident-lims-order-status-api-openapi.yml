@@ -1,0 +1,707 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Order Status API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Order Status
+  description: Order lifecycle state transitions
+paths:
+  /v0/labs/order/{order_id}/status/verify:
+    post:
+      summary: Verify order
+      description: Moves order from 'Placed' (status_id 1) to 'In Progress' (status_id 3).
+      operationId: verifyOrder
+      tags:
+      - Order Status
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_verified:
+                  type: string
+                  format: date
+                  description: Optional verification date (defaults to current date)
+      responses:
+        '200':
+          description: Order verified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}/status/complete:
+    post:
+      summary: Complete order
+      description: Moves order from 'In Progress' (status_id 3) to 'Completed' (status_id 4).
+      operationId: completeOrder
+      tags:
+      - Order Status
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_completed:
+                  type: string
+                  format: date
+      responses:
+        '200':
+          description: Order completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}/status/unverify:
+    post:
+      summary: Unverify order
+      description: Moves order from 'In Progress' (status_id 3) back to 'Placed' (status_id 1).
+      operationId: unverifyOrder
+      tags:
+      - Order Status
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order unverified successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}/status/revise:
+    post:
+      summary: Revise order
+      description: Moves order from 'Completed' (status_id 4) back to 'In Progress' (status_id 3).
+      operationId: reviseOrder
+      tags:
+      - Order Status
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order moved to in progress for revision
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}/status/cancel:
+    post:
+      summary: Cancel order
+      description: Moves order to 'Canceled' (status_id 5).
+      operationId: cancelOrder
+      tags:
+      - Order Status
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cancel_reason:
+                  type: string
+                  description: Optional reason for cancellation
+      responses:
+        '200':
+          description: Order canceled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}/status/uncancel:
+    post:
+      summary: Uncancel order
+      description: Moves order from 'Canceled' (status_id 5) back to 'Placed' (status_id 1).
+      operationId: uncancelOrder
+      tags:
+      - Order Status
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Order uncanceled successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

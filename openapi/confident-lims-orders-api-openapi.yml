@@ -1,0 +1,1193 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Orders API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Orders
+  description: View orders and order details
+paths:
+  /v0/clients/orders:
+    get:
+      summary: List orders
+      description: Returns a paginated list of orders for the authenticated client. Supports filtering by status and modification time.
+      operationId: getOrders
+      tags:
+      - Orders
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: start
+        in: query
+        description: Pagination offset (number of records to skip)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+          example: 0
+      - name: limit
+        in: query
+        description: Maximum number of records to return (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+          example: 100
+      - name: status_id
+        in: query
+        description: Filter by order status ID (1=Placed, 3=In Progress, 4=Completed, 5=Canceled)
+        required: false
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 3
+          - 4
+          - 5
+      - name: modified_since_time
+        in: query
+        description: Filter orders modified since this timestamp (ISO 8601 format)
+        required: false
+        schema:
+          type: string
+          format: date-time
+          example: '2025-01-01T00:00:00Z'
+      responses:
+        '200':
+          description: Successful response with list of orders
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - orders
+                - more_results
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  orders:
+                    type: array
+                    items:
+                      type: object
+                      description: Summary information about an order
+                      required:
+                      - lab_internal_id
+                      - status_id
+                      - status_name
+                      - client_id
+                      - client_name
+                      - num_samples
+                      - date_placed
+                      - last_modified
+                      properties:
+                        lab_internal_id:
+                          type: string
+                          description: Lab's internal order ID
+                          example: ORD-2025-001
+                        status_id:
+                          type: integer
+                          description: Order status ID (1=Placed, 3=In Progress, 4=Completed, 5=Canceled)
+                          enum:
+                          - 1
+                          - 3
+                          - 4
+                          - 5
+                          example: 3
+                        status_name:
+                          type: string
+                          description: Human-readable status name
+                          example: In Progress
+                        client_id:
+                          type: integer
+                          description: Client ID
+                          example: 123
+                        client_name:
+                          type: string
+                          description: Client organization name
+                          example: Green Valley Dispensary
+                        num_samples:
+                          type: integer
+                          description: Number of samples in this order
+                          example: 5
+                        date_placed:
+                          type: string
+                          format: date-time
+                          description: Date order was placed
+                          example: '2025-01-10T09:00:00Z'
+                        last_modified:
+                          type: string
+                          format: date-time
+                          description: Last modification timestamp
+                          example: '2025-01-12T14:30:00Z'
+                  more_results:
+                    type: boolean
+                    description: True if there are more results beyond this page
+                    example: false
+              examples:
+                with_filters:
+                  summary: Orders filtered by status
+                  value:
+                    success: true
+                    orders:
+                    - lab_internal_id: ORD-2025-001
+                      status_id: 3
+                      status_name: In Progress
+                      client_id: 123
+                      client_name: Green Valley Dispensary
+                      num_samples: 5
+                      date_placed: '2025-01-10T09:00:00Z'
+                      last_modified: '2025-01-12T14:30:00Z'
+                    more_results: false
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: invalid_request
+                  error_message:
+                    type: string
+                    example: Invalid request parameters
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+  /v0/clients/order/{order_id}:
+    get:
+      summary: Get order details
+      description: Returns detailed information about a specific order including all samples.
+      operationId: getOrderDetails
+      tags:
+      - Orders
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: order_id
+        in: path
+        description: The lab_internal_id of the order
+        required: true
+        schema:
+          type: string
+          example: ORD-2025-001
+      responses:
+        '200':
+          description: Successful response with order details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - order
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  order:
+                    type: object
+                    description: Detailed information about an order including all samples
+                    required:
+                    - lab_internal_id
+                    - status_id
+                    - status_name
+                    - client_id
+                    - client_name
+                    - samples
+                    properties:
+                      lab_internal_id:
+                        type: string
+                        description: Lab's internal order ID
+                        example: ORD-2025-001
+                      status_id:
+                        type: integer
+                        enum:
+                        - 1
+                        - 3
+                        - 4
+                        - 5
+                        example: 3
+                      status_name:
+                        type: string
+                        example: In Progress
+                      client_id:
+                        type: integer
+                        example: 123
+                      client_name:
+                        type: string
+                        example: Green Valley Dispensary
+                      date_placed:
+                        type: string
+                        format: date-time
+                        example: '2025-01-10T09:00:00Z'
+                      last_modified:
+                        type: string
+                        format: date-time
+                        example: '2025-01-12T14:30:00Z'
+                      samples:
+                        type: array
+                        description: All samples in this order
+                        items:
+                          type: object
+                          description: Summary information about a sample
+                          required:
+                          - lab_internal_id
+                          - public_key
+                          - name
+                          - sample_type
+                          - status_id
+                          - status_name
+                          - date_created
+                          - last_modified
+                          properties:
+                            lab_internal_id:
+                              type: string
+                              description: Lab's internal sample ID
+                              example: SAMP-2025-001
+                            public_key:
+                              type: string
+                              description: Public identifier for the sample
+                              example: abc123def456
+                            name:
+                              type: string
+                              description: Sample name
+                              example: OG Kush - Batch 42
+                            sample_type:
+                              type: string
+                              description: Type of sample
+                              example: Flower
+                            regulator_batch_id:
+                              type: string
+                              description: Regulator batch identifier
+                              example: BATCH-42
+                            harvest_id:
+                              type: string
+                              description: Harvest identifier
+                              example: HARVEST-2025-01
+                            status_id:
+                              type: integer
+                              description: Order status ID
+                              example: 3
+                            status_name:
+                              type: string
+                              description: Human-readable status name
+                              example: In Progress
+                            date_created:
+                              type: string
+                              format: date-time
+                              description: Creation timestamp
+                              example: '2025-01-10T09:00:00Z'
+                            last_modified:
+                              type: string
+                              format: date-time
+                              description: Last modification timestamp
+                              example: '2025-01-12T14:30:00Z'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: not_found
+                  error_message:
+                    type: string
+                    example: Resource not found
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+  /v0/labs/orders:
+    get:
+      summary: List orders
+      description: Returns a paginated list of orders for the authenticated lab.
+      operationId: getOrders
+      tags:
+      - Orders
+      parameters:
+      - name: start
+        in: query
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: limit
+        in: query
+        description: Maximum records to return (max 100)
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+      - name: status_id
+        in: query
+        description: Filter by order status ID
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 3
+          - 4
+          - 5
+      - name: client_id
+        in: query
+        description: Filter by client ID
+        schema:
+          type: integer
+      - name: modified_since_time
+        in: query
+        description: Filter by modification timestamp
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Successful response with list of orders
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - orders
+                - more_results
+                properties:
+                  success:
+                    type: boolean
+                  orders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        lab_internal_id:
+                          type: string
+                        status_id:
+                          type: integer
+                        status_name:
+                          type: string
+                        client_id:
+                          type: integer
+                        client_name:
+                          type: string
+                        num_samples:
+                          type: integer
+                        date_placed:
+                          type: string
+                          format: date-time
+                        last_modified:
+                          type: string
+                          format: date-time
+                  more_results:
+                    type: boolean
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order:
+    post:
+      summary: Create order
+      description: Creates a new order with one or more samples.
+      operationId: createOrder
+      tags:
+      - Orders
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - client_id
+              - lab_internal_id
+              - samples
+              properties:
+                client_id:
+                  type: integer
+                  description: Client ID
+                lab_internal_id:
+                  type: string
+                  description: Lab's internal order ID
+                samples:
+                  type: array
+                  description: Array of samples to include in order
+                  minItems: 1
+                  items:
+                    type: object
+                    required:
+                    - name
+                    - sample_type_id
+                    - lab_internal_id
+                    properties:
+                      name:
+                        type: string
+                      sample_type_id:
+                        type: integer
+                      lab_internal_id:
+                        type: string
+                      strain:
+                        type: string
+                      regulator_batch_id:
+                        type: string
+                      harvest_id:
+                        type: string
+            examples:
+              single_sample:
+                summary: Order with one sample
+                value:
+                  client_id: 123
+                  lab_internal_id: ORD-2025-100
+                  samples:
+                  - name: OG Kush - Batch 42
+                    sample_type_id: 1
+                    lab_internal_id: SAMP-2025-100
+                    regulator_batch_id: BATCH-42
+      responses:
+        '200':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - order
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  order:
+                    properties:
+                      lab_internal_id:
+                        type: string
+                      status_id:
+                        type: integer
+                      status_name:
+                        type: string
+                      client_id:
+                        type: integer
+                      client_name:
+                        type: string
+                      num_samples:
+                        type: integer
+                      date_placed:
+                        type: string
+                        format: date-time
+                      last_modified:
+                        type: string
+                        format: date-time
+                      samples:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            lab_internal_id:
+                              type: string
+                            public_key:
+                              type: string
+                            name:
+                              type: string
+                            sample_type:
+                              type: string
+                            status_id:
+                              type: integer
+                            status_name:
+                              type: string
+                            date_created:
+                              type: string
+                              format: date-time
+                            last_modified:
+                              type: string
+                              format: date-time
+                    type: object
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}:
+    get:
+      summary: Get order details
+      description: Returns detailed information about a specific order.
+      operationId: getOrderDetails
+      tags:
+      - Orders
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with order details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - order
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  order:
+                    properties:
+                      lab_internal_id:
+                        type: string
+                      status_id:
+                        type: integer
+                      status_name:
+                        type: string
+                      client_id:
+                        type: integer
+                      client_name:
+                        type: string
+                      num_samples:
+                        type: integer
+                      date_placed:
+                        type: string
+                        format: date-time
+                      last_modified:
+                        type: string
+                        format: date-time
+                      samples:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            lab_internal_id:
+                              type: string
+                            public_key:
+                              type: string
+                            name:
+                              type: string
+                            sample_type:
+                              type: string
+                            status_id:
+                              type: integer
+                            status_name:
+                              type: string
+                            date_created:
+                              type: string
+                              format: date-time
+                            last_modified:
+                              type: string
+                              format: date-time
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+    patch:
+      summary: Edit order
+      description: Updates editable properties of an order.
+      operationId: editOrder
+      tags:
+      - Orders
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                lab_internal_id:
+                  type: string
+                notes:
+                  type: string
+      responses:
+        '200':
+          description: Order updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - order
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  order:
+                    properties:
+                      lab_internal_id:
+                        type: string
+                      status_id:
+                        type: integer
+                      status_name:
+                        type: string
+                      client_id:
+                        type: integer
+                      client_name:
+                        type: string
+                      num_samples:
+                        type: integer
+                      date_placed:
+                        type: string
+                        format: date-time
+                      last_modified:
+                        type: string
+                        format: date-time
+                      samples:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            lab_internal_id:
+                              type: string
+                            public_key:
+                              type: string
+                            name:
+                              type: string
+                            sample_type:
+                              type: string
+                            status_id:
+                              type: integer
+                            status_name:
+                              type: string
+                            date_created:
+                              type: string
+                              format: date-time
+                            last_modified:
+                              type: string
+                              format: date-time
+                    type: object
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/order/{order_id}/document:
+    post:
+      summary: Upload order document
+      description: 'Uploads a document file for an order. Supported formats: csv, pdf, png, jpg, txt, etc. Do NOT include file field in signature.'
+      operationId: uploadOrderDocument
+      tags:
+      - Orders
+      parameters:
+      - name: order_id
+        in: path
+        required: true
+        description: Order identifier (lab_internal_id)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Document uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

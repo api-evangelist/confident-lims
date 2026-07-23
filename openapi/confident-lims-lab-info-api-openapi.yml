@@ -1,0 +1,112 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Lab Info API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Lab Info
+  description: Lab organization information
+paths:
+  /v0/labs/lab:
+    get:
+      summary: Get lab information
+      description: Returns information about the authenticated lab organization.
+      operationId: getLab
+      tags:
+      - Lab Info
+      responses:
+        '200':
+          description: Successful response with lab details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - lab
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  lab:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      email:
+                        type: string
+                      phone:
+                        type: string
+                      url:
+                        type: string
+                      state:
+                        type: string
+                      city:
+                        type: string
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

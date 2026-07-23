@@ -1,0 +1,415 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Sample Files API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Sample Files
+  description: Upload sample images and documents
+paths:
+  /v0/labs/sample/{sample_id}/image:
+    post:
+      summary: Upload sample image
+      description: 'Uploads an image file for a sample. Supported formats: jpg, jpeg, png, gif, bmp. Can only be uploaded while order is in progress (status_id 3). Do NOT include file fields in signature generation.'
+      operationId: uploadSampleImage
+      tags:
+      - Sample Files
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: Image file (jpg, jpeg, png, gif, bmp)
+                subtype:
+                  type: integer
+                  description: Image subtype (0=Sample, 1=Microscope, 2=Micro Plate, 3=Chromatogram, etc.)
+                  default: 0
+                set_as_cover:
+                  type: boolean
+                  description: Set this image as the cover image
+                  default: false
+      responses:
+        '200':
+          description: Successful upload
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - image_url
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  image_url:
+                    type: string
+                    format: uri
+                    example: https://cdn.confidentcannabis.com/images/sample123.jpg
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/sample/{sample_id}/coa:
+    post:
+      summary: Upload Certificate of Analysis
+      description: Uploads a PDF Certificate of Analysis for a sample. Only PDF files are accepted. Can only be uploaded while order is in progress. Do NOT include file field in signature.
+      operationId: uploadSampleCOA
+      tags:
+      - Sample Files
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF file
+      responses:
+        '200':
+          description: Successful upload
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - coa_url
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  coa_url:
+                    type: string
+                    format: uri
+                    example: https://cdn.confidentcannabis.com/coa/sample123.pdf
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/sample/{sample_id}/coa_addition:
+    post:
+      summary: Upload CoA addition file
+      description: 'Uploads an additional file related to the Certificate of Analysis. Supported formats: pdf, jpg, jpeg, png, gif, bmp. Do NOT include file field in signature.'
+      operationId: uploadSampleCOAAddition
+      tags:
+      - Sample Files
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - file
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful upload
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - addition_url
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  addition_url:
+                    type: string
+                    format: uri
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

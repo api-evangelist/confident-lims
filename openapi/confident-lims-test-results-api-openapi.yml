@@ -1,0 +1,174 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Test Results API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Test Results
+  description: Submit and manage test results
+paths:
+  /v0/labs/sample/{sample_id}/test_results:
+    post:
+      summary: Submit test results
+      description: Submits test results for a sample. Test results are organized by category (cannabinoids, terpenes, pesticides, etc.) with compound data and info fields. All numeric values should be strings to preserve precision. Subsequent submissions overwrite previous data.
+      operationId: submitTestResults
+      tags:
+      - Test Results
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - test_results
+              properties:
+                test_results:
+                  type: string
+                  description: JSON string containing test results organized by category. Must be a string, not an object.
+                  example: '{"categories": {"cannabinoids": {"info_fields": {"input_units": "mg/g", "report_units": "mg/g", "date_tested": "2025-01-15"}, "compounds": [{"name": "thc", "value": "18.5"}]}}}'
+                publish_data:
+                  type: boolean
+                  description: Whether to publish the test results
+                  default: false
+                date_published:
+                  type: string
+                  format: date
+                  description: Publication date (required if publish_data is true)
+            examples:
+              cannabinoids_only:
+                summary: Simple cannabinoids test
+                value:
+                  test_results: '{"categories": {"cannabinoids": {"info_fields": {"input_units": "mg/g", "report_units": "mg/g", "date_tested": "2025-01-15"}, "compounds": [{"name": "thc", "value": "18.5"}, {"name": "cbd", "value": "0.8"}]}}}'
+                  publish_data: false
+              multi_category:
+                summary: Cannabinoids and Terpenes
+                value:
+                  test_results: '{"categories": {"cannabinoids": {"info_fields": {"input_units": "mg/g", "report_units": "mg/g", "date_tested": "2025-01-15"}, "compounds": [{"name": "thc", "value": "18.5", "lod": "0.01", "loq": "0.05"}, {"name": "cbd", "value": "0.8"}]}, "terpenes": {"info_fields": {"input_units": "mg/g", "report_units": "mg/g", "date_tested": "2025-01-15"}, "compounds": [{"name": "limonene", "value": "2.5"}, {"name": "myrcene", "value": "1.8"}]}}}'
+                  publish_data: true
+                  date_published: '2025-01-16'
+      responses:
+        '200':
+          description: Test results submitted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

@@ -1,0 +1,511 @@
+openapi: 3.1.0
+info:
+  title: Client Info Clients API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Clients
+  description: Client relationship management
+paths:
+  /v0/labs/clients:
+    get:
+      summary: List clients
+      description: Returns a paginated list of clients associated with this lab.
+      operationId: getClients
+      tags:
+      - Clients
+      parameters:
+      - name: start
+        in: query
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: limit
+        in: query
+        description: Maximum records to return (max 100)
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Successful response with list of clients
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - clients
+                - more_results
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  clients:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        training:
+                          type: boolean
+                        last_modified:
+                          type: string
+                          format: date-time
+                  more_results:
+                    type: boolean
+                    example: false
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+    post:
+      summary: Create client
+      description: Creates a new client organization for this lab.
+      operationId: createClient
+      tags:
+      - Clients
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - name
+              properties:
+                name:
+                  type: string
+                  description: Client organization name
+                email:
+                  type: string
+                phone:
+                  type: string
+                url:
+                  type: string
+      responses:
+        '200':
+          description: Client created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - client
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  client:
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      training:
+                        type: boolean
+                      last_modified:
+                        type: string
+                        format: date-time
+                      email:
+                        type: string
+                      phone:
+                        type: string
+                      url:
+                        type: string
+                    type: object
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/client/{client_id}:
+    get:
+      summary: Get client details
+      description: Returns detailed information about a specific client.
+      operationId: getClientDetails
+      tags:
+      - Clients
+      parameters:
+      - name: client_id
+        in: path
+        description: The ID of the client
+        schema:
+          type: integer
+        required: true
+      responses:
+        '200':
+          description: Successful response with client details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - client
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  client:
+                    properties:
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                      training:
+                        type: boolean
+                      last_modified:
+                        type: string
+                        format: date-time
+                      email:
+                        type: string
+                      phone:
+                        type: string
+                      url:
+                        type: string
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/client/{client_id}/invite:
+    post:
+      summary: Invite user to client
+      description: Invites a user to join a client organization with a specified role.
+      operationId: inviteUserToClient
+      tags:
+      - Clients
+      parameters:
+      - name: client_id
+        in: path
+        description: The ID of the client
+        schema:
+          type: integer
+        required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - email
+              - role
+              properties:
+                email:
+                  type: string
+                  format: email
+                role:
+                  type: string
+                  enum:
+                  - owner
+                  - admin
+                  - user
+                  - viewer
+                  description: User role in the client organization
+                first_name:
+                  type: string
+                last_name:
+                  type: string
+            examples:
+              invite:
+                summary: Invite user as admin
+                value:
+                  email: user@example.com
+                  role: admin
+                  first_name: John
+                  last_name: Doe
+      responses:
+        '200':
+          description: Invitation sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

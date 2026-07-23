@@ -1,0 +1,214 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Client Info
+  description: Client organization information
+paths:
+  /v0/clients/client:
+    get:
+      summary: Get current client information
+      description: Returns information about the authenticated client organization.
+      operationId: getClient
+      tags:
+      - Client Info
+      security:
+      - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Successful response with client details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - client
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  client:
+                    type: object
+                    description: Detailed information about a client organization
+                    required:
+                    - id
+                    - name
+                    - training
+                    - last_modified
+                    properties:
+                      id:
+                        type: integer
+                        description: Unique client ID
+                        example: 123
+                      name:
+                        type: string
+                        description: Organization name
+                        example: Green Valley Dispensary
+                      email:
+                        type: string
+                        format: email
+                        description: Organization email
+                        example: contact@greenvalley.com
+                      phone:
+                        type: string
+                        description: Organization phone number
+                        example: (555) 123-4567
+                      url:
+                        type: string
+                        format: uri
+                        description: Organization website
+                        example: https://greenvalley.com
+                      training:
+                        type: boolean
+                        description: Whether this is a training/demo client
+                        example: false
+                      last_modified:
+                        type: string
+                        format: date-time
+                        description: Last modification timestamp
+                        example: '2025-01-15T10:30:00Z'
+                      primary_address:
+                        type: object
+                        description: Physical address
+                        properties:
+                          street:
+                            type: string
+                            example: 123 Main St
+                          city:
+                            type: string
+                            example: Denver
+                          state:
+                            type: string
+                            example: CO
+                          zip:
+                            type: string
+                            example: '80202'
+                          country:
+                            type: string
+                            example: USA
+                      licenses:
+                        type: array
+                        description: Business licenses
+                        items:
+                          type: object
+                          description: Business license information
+                          properties:
+                            license_number:
+                              type: string
+                              example: MED-12345
+                            license_type:
+                              type: string
+                              example: Medical Marijuana Dispensary
+                            state:
+                              type: string
+                              example: CO
+                            expiration_date:
+                              type: string
+                              format: date
+                              example: '2026-12-31'
+              examples:
+                success:
+                  summary: Successful client response
+                  value:
+                    success: true
+                    client:
+                      id: 123
+                      name: Green Valley Dispensary
+                      email: contact@greenvalley.com
+                      phone: (555) 123-4567
+                      url: https://greenvalley.com
+                      training: false
+                      last_modified: '2025-01-15T10:30:00Z'
+                      primary_address:
+                        street: 123 Main St
+                        city: Denver
+                        state: CO
+                        zip: '80202'
+                        country: USA
+                      licenses:
+                      - license_number: MED-12345
+                        license_type: Medical Marijuana Dispensary
+                        state: CO
+                        expiration_date: '2026-12-31'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

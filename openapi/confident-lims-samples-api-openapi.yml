@@ -1,0 +1,1046 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Samples API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Samples
+  description: View samples and test results
+paths:
+  /v0/clients/samples:
+    get:
+      summary: List samples
+      description: Returns a paginated list of samples for the authenticated client. Supports filtering by status, batch ID, harvest ID, and modification time.
+      operationId: getSamples
+      tags:
+      - Samples
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: start
+        in: query
+        description: Pagination offset (number of records to skip)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+          example: 0
+      - name: limit
+        in: query
+        description: Maximum number of records to return (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+          example: 100
+      - name: status_id
+        in: query
+        description: Filter by order status ID
+        required: false
+        schema:
+          type: integer
+      - name: modified_since_time
+        in: query
+        description: Filter samples modified since this timestamp
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: regulator_batch_id
+        in: query
+        description: Filter by regulator batch ID
+        required: false
+        schema:
+          type: string
+      - name: harvest_id
+        in: query
+        description: Filter by harvest ID
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of samples
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - samples
+                - more_results
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  samples:
+                    type: array
+                    items:
+                      type: object
+                      description: Summary information about a sample
+                      required:
+                      - lab_internal_id
+                      - public_key
+                      - name
+                      - sample_type
+                      - status_id
+                      - status_name
+                      - date_created
+                      - last_modified
+                      properties:
+                        lab_internal_id:
+                          type: string
+                          description: Lab's internal sample ID
+                          example: SAMP-2025-001
+                        public_key:
+                          type: string
+                          description: Public identifier for the sample
+                          example: abc123def456
+                        name:
+                          type: string
+                          description: Sample name
+                          example: OG Kush - Batch 42
+                        sample_type:
+                          type: string
+                          description: Type of sample
+                          example: Flower
+                        regulator_batch_id:
+                          type: string
+                          description: Regulator batch identifier
+                          example: BATCH-42
+                        harvest_id:
+                          type: string
+                          description: Harvest identifier
+                          example: HARVEST-2025-01
+                        status_id:
+                          type: integer
+                          description: Order status ID
+                          example: 3
+                        status_name:
+                          type: string
+                          description: Human-readable status name
+                          example: In Progress
+                        date_created:
+                          type: string
+                          format: date-time
+                          description: Creation timestamp
+                          example: '2025-01-10T09:00:00Z'
+                        last_modified:
+                          type: string
+                          format: date-time
+                          description: Last modification timestamp
+                          example: '2025-01-12T14:30:00Z'
+                  more_results:
+                    type: boolean
+                    example: false
+              examples:
+                with_filters:
+                  summary: Samples filtered by batch ID
+                  value:
+                    success: true
+                    samples:
+                    - lab_internal_id: SAMP-2025-001
+                      public_key: abc123def456
+                      name: OG Kush - Batch 42
+                      sample_type: Flower
+                      regulator_batch_id: BATCH-42
+                      harvest_id: HARVEST-2025-01
+                      status_id: 3
+                      status_name: In Progress
+                      date_created: '2025-01-10T09:00:00Z'
+                      last_modified: '2025-01-12T14:30:00Z'
+                    more_results: false
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: invalid_request
+                  error_message:
+                    type: string
+                    example: Invalid request parameters
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+  /v0/clients/sample/{sample_id}:
+    get:
+      summary: Get sample details
+      description: Returns detailed information about a specific sample including test results. Sample ID can be lab_internal_id, public_key, or regulator_id_to_attach.
+      operationId: getSampleDetails
+      tags:
+      - Samples
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: sample_id
+        in: path
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        required: true
+        schema:
+          type: string
+          example: SAMP-2025-001
+      responses:
+        '200':
+          description: Successful response with sample details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - sample
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  sample:
+                    type: object
+                    description: Extended sample details including test results and files
+                    required:
+                    - lab_internal_id
+                    - public_key
+                    - name
+                    - sample_type
+                    - status_id
+                    - status_name
+                    - date_created
+                    - last_modified
+                    properties:
+                      lab_internal_id:
+                        type: string
+                        description: Lab's internal sample ID
+                        example: SAMP-2025-001
+                      public_key:
+                        type: string
+                        description: Public identifier for the sample
+                        example: abc123def456
+                      name:
+                        type: string
+                        description: Sample name
+                        example: OG Kush - Batch 42
+                      sample_type:
+                        type: string
+                        description: Type of sample
+                        example: Flower
+                      regulator_batch_id:
+                        type: string
+                        description: Regulator batch identifier
+                        example: BATCH-42
+                      harvest_id:
+                        type: string
+                        description: Harvest identifier
+                        example: HARVEST-2025-01
+                      status_id:
+                        type: integer
+                        description: Order status ID
+                        example: 3
+                      status_name:
+                        type: string
+                        description: Human-readable status name
+                        example: In Progress
+                      date_created:
+                        type: string
+                        format: date-time
+                        description: Creation timestamp
+                        example: '2025-01-10T09:00:00Z'
+                      last_modified:
+                        type: string
+                        format: date-time
+                        description: Last modification timestamp
+                        example: '2025-01-12T14:30:00Z'
+                      test_results:
+                        type: object
+                        description: Test results organized by category
+                        additionalProperties:
+                          type: object
+                      images:
+                        type: array
+                        description: Sample images
+                        items:
+                          type: object
+                          properties:
+                            url:
+                              type: string
+                              format: uri
+                            type:
+                              type: string
+                      coa_url:
+                        type: string
+                        format: uri
+                        description: URL to Certificate of Analysis PDF
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: not_found
+                  error_message:
+                    type: string
+                    example: Resource not found
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+  /v0/labs/samples:
+    get:
+      summary: List samples
+      description: Returns a paginated list of samples for the authenticated lab. Supports filtering by status, client, batch ID, harvest ID, and modification time.
+      operationId: getSamples
+      tags:
+      - Samples
+      parameters:
+      - name: start
+        in: query
+        description: Pagination offset
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+      - name: limit
+        in: query
+        description: Maximum records to return (max 100)
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+      - name: status_id
+        in: query
+        description: Filter by order status ID
+        schema:
+          type: integer
+          enum:
+          - 1
+          - 3
+          - 4
+          - 5
+      - name: client_id
+        in: query
+        description: Filter by client ID
+        schema:
+          type: integer
+      - name: modified_since_time
+        in: query
+        description: Filter by modification timestamp
+        schema:
+          type: string
+          format: date-time
+      - name: regulator_batch_id
+        in: query
+        schema:
+          type: string
+      - name: harvest_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with list of samples
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - samples
+                - more_results
+                properties:
+                  success:
+                    type: boolean
+                  samples:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        lab_internal_id:
+                          type: string
+                        public_key:
+                          type: string
+                        name:
+                          type: string
+                        sample_type:
+                          type: string
+                        status_id:
+                          type: integer
+                        status_name:
+                          type: string
+                        date_created:
+                          type: string
+                          format: date-time
+                        last_modified:
+                          type: string
+                          format: date-time
+                  more_results:
+                    type: boolean
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/sample/{sample_id}:
+    get:
+      summary: Get sample details
+      description: Returns detailed information about a specific sample. Sample ID can be lab_internal_id, public_key, or regulator_id_to_attach.
+      operationId: getSampleDetails
+      tags:
+      - Samples
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response with sample details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - sample
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  sample:
+                    properties:
+                      lab_internal_id:
+                        type: string
+                      public_key:
+                        type: string
+                      name:
+                        type: string
+                      sample_type:
+                        type: string
+                      status_id:
+                        type: integer
+                      status_name:
+                        type: string
+                      date_created:
+                        type: string
+                        format: date-time
+                      last_modified:
+                        type: string
+                        format: date-time
+                      regulator_batch_id:
+                        type: string
+                      harvest_id:
+                        type: string
+                      sample_classification:
+                        type: string
+                      strain:
+                        type: string
+                      test_results:
+                        type: object
+                      images:
+                        type: array
+                        items:
+                          type: object
+                      coa_url:
+                        type: string
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+    patch:
+      summary: Edit sample properties
+      description: Updates editable properties of a sample such as name, strain, batch ID, harvest ID, etc.
+      operationId: editSample
+      tags:
+      - Samples
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                strain:
+                  type: string
+                regulator_batch_id:
+                  type: string
+                harvest_id:
+                  type: string
+                sample_classification_id:
+                  type: integer
+                sample_production_method_id:
+                  type: integer
+            examples:
+              basic_edit:
+                summary: Update sample name and batch ID
+                value:
+                  name: OG Kush - Updated Name
+                  regulator_batch_id: BATCH-42-UPDATED
+      responses:
+        '200':
+          description: Successful edit
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - sample
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  sample:
+                    properties:
+                      lab_internal_id:
+                        type: string
+                      public_key:
+                        type: string
+                      name:
+                        type: string
+                      sample_type:
+                        type: string
+                      status_id:
+                        type: integer
+                      status_name:
+                        type: string
+                      date_created:
+                        type: string
+                        format: date-time
+                      last_modified:
+                        type: string
+                        format: date-time
+                      regulator_batch_id:
+                        type: string
+                      harvest_id:
+                        type: string
+                      sample_classification:
+                        type: string
+                      strain:
+                        type: string
+                      test_results:
+                        type: object
+                      images:
+                        type: array
+                        items:
+                          type: object
+                      coa_url:
+                        type: string
+                    type: object
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+  /v0/labs/sample/{sample_id}/weight_on_hand:
+    post:
+      summary: Adjust weight on hand
+      description: Adjusts the weight on hand for a sample with a reason code.
+      operationId: adjustWeightOnHand
+      tags:
+      - Samples
+      parameters:
+      - name: sample_id
+        in: path
+        required: true
+        description: Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - weight_change
+              - units
+              - change_reason
+              properties:
+                weight_change:
+                  type: string
+                  description: Weight change amount (can be negative). As string to preserve precision.
+                  example: '-2.5'
+                units:
+                  type: string
+                  description: Weight units
+                  enum:
+                  - g
+                  - units
+                  example: g
+                change_reason:
+                  type: integer
+                  description: 'Reason code: 0=other, 1=initial, 2=destroyed, 3=used, 4=returned, 5=lost, 6=stolen, 7=addition'
+                  enum:
+                  - 0
+                  - 1
+                  - 2
+                  - 3
+                  - 4
+                  - 5
+                  - 6
+                  - 7
+                  example: 3
+                notes:
+                  type: string
+                  description: Optional notes about the change
+            examples:
+              adjustment:
+                summary: Record sample usage
+                value:
+                  weight_change: '-2.5'
+                  units: g
+                  change_reason: 3
+                  notes: Used for additional testing
+      responses:
+        '200':
+          description: Weight adjusted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                  error_message:
+                    type: string
+                  error_details:
+                    type: object
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.

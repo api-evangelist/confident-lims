@@ -1,0 +1,377 @@
+openapi: 3.1.0
+info:
+  title: Clients Client Info Labs API
+  version: 0.16.0
+  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  contact:
+    name: Confident Cannabis API Support
+    url: https://www.confidentcannabis.com
+servers:
+- url: https://api.confidentcannabis.com
+  description: Production server
+security:
+- ApiKeyAuth: []
+tags:
+- name: Labs
+  description: View associated labs
+paths:
+  /v0/clients/labs:
+    get:
+      summary: List labs
+      description: Returns a paginated list of labs associated with the authenticated client.
+      operationId: getLabs
+      tags:
+      - Labs
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: start
+        in: query
+        description: Pagination offset (number of records to skip)
+        required: false
+        schema:
+          type: integer
+          default: 0
+          minimum: 0
+          example: 0
+      - name: limit
+        in: query
+        description: Maximum number of records to return (max 100)
+        required: false
+        schema:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+          example: 100
+      - name: state
+        in: query
+        description: Filter by state (2-letter state code)
+        required: false
+        schema:
+          type: string
+          pattern: ^[A-Z]{2}$
+          example: CO
+      responses:
+        '200':
+          description: Successful response with list of labs
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - labs
+                - more_results
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  labs:
+                    type: array
+                    items:
+                      type: object
+                      description: Summary information about a lab
+                      required:
+                      - id
+                      - name
+                      - state
+                      - city
+                      - last_modified
+                      properties:
+                        id:
+                          type: integer
+                          example: 456
+                        name:
+                          type: string
+                          example: Rocky Mountain Testing Lab
+                        state:
+                          type: string
+                          example: CO
+                        city:
+                          type: string
+                          example: Denver
+                        last_modified:
+                          type: string
+                          format: date-time
+                          example: '2025-01-10T08:00:00Z'
+                  more_results:
+                    type: boolean
+                    example: false
+              examples:
+                success:
+                  summary: Successful labs response
+                  value:
+                    success: true
+                    labs:
+                    - id: 456
+                      name: Rocky Mountain Testing Lab
+                      state: CO
+                      city: Denver
+                      last_modified: '2025-01-10T08:00:00Z'
+                    more_results: false
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: invalid_request
+                  error_message:
+                    type: string
+                    example: Invalid request parameters
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+  /v0/clients/lab/{lab_id}:
+    get:
+      summary: Get lab details
+      description: Returns detailed information about a specific lab.
+      operationId: getLabDetails
+      tags:
+      - Labs
+      security:
+      - ApiKeyAuth: []
+      parameters:
+      - name: lab_id
+        in: path
+        description: The ID of the lab
+        required: true
+        schema:
+          type: integer
+          example: 456
+      responses:
+        '200':
+          description: Successful response with lab details
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - success
+                - lab
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  lab:
+                    type: object
+                    description: Detailed information about a lab
+                    required:
+                    - id
+                    - name
+                    - state
+                    - city
+                    properties:
+                      id:
+                        type: integer
+                        example: 456
+                      name:
+                        type: string
+                        example: Rocky Mountain Testing Lab
+                      email:
+                        type: string
+                        format: email
+                        example: info@rmtlab.com
+                      phone:
+                        type: string
+                        example: (555) 987-6543
+                      url:
+                        type: string
+                        format: uri
+                        example: https://rmtlab.com
+                      state:
+                        type: string
+                        example: CO
+                      city:
+                        type: string
+                        example: Denver
+                      primary_address:
+                        type: object
+                        description: Physical address
+                        properties:
+                          street:
+                            type: string
+                            example: 123 Main St
+                          city:
+                            type: string
+                            example: Denver
+                          state:
+                            type: string
+                            example: CO
+                          zip:
+                            type: string
+                            example: '80202'
+                          country:
+                            type: string
+                            example: USA
+                      last_modified:
+                        type: string
+                        format: date-time
+                        example: '2025-01-10T08:00:00Z'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: missing_api_key
+                  error_message:
+                    type: string
+                    example: Missing API key header
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '403':
+          description: Access denied
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: permission_denied
+                  error_message:
+                    type: string
+                    example: Access denied
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+        '404':
+          description: Resource not found
+          content:
+            application/json:
+              schema:
+                type: object
+                description: Error response
+                required:
+                - success
+                - error_code
+                - error_message
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  error_code:
+                    type: string
+                    example: not_found
+                  error_message:
+                    type: string
+                    example: Resource not found
+                  error_details:
+                    type: object
+                    additionalProperties:
+                      type: array
+                      items:
+                        type: string
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-APIKey
+      description: API key for authentication. Required for all requests.
+    SignatureAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Signature
+      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+    TimestampAuth:
+      type: apiKey
+      in: header
+      name: X-ConfidentCannabis-Timestamp
+      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.
