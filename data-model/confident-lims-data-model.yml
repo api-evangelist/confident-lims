@@ -1,0 +1,111 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/confident-lims-clients-openapi.json, openapi/confident-lims-common-openapi.json,
+  openapi/confident-lims-labs-openapi.json
+# Entity-relationship graph derived from OpenAPI paths, id path/query params, and request/response
+# schemas across the labs, clients, and common specs. ids are inline (no components.schemas reuse).
+entities:
+- name: Lab
+  id_field: lab_id
+  also: lab_internal_id
+  operations: [getLab, getLabDetails, getLabs]
+- name: Client
+  description: Testing client (the lab's customer submitting samples)
+  id_field: client_id
+  operations: [getClient, getClients, getClientDetails, createClient, inviteUserToClient]
+- name: Order
+  id_field: order_id
+  also: lab_internal_id
+  operations: [getOrders, getOrderDetails, createOrder, editOrder, verifyOrder, unverifyOrder,
+    completeOrder, reviseOrder, cancelOrder, uncancelOrder, uploadOrderDocument]
+- name: Sample
+  id_field: sample_id
+  operations: [getSamples, getSampleDetails, editSample, adjustWeightOnHand, uploadSampleImage,
+    uploadSampleCOA, uploadSampleCOAAddition, submitTestResults]
+- name: TestResult
+  description: Analytical results submitted against a sample
+  operations: [submitTestResults]
+- name: Compound
+  operations: [getCompounds, getLabCompounds]
+- name: TestType
+  operations: [getTestTypes, getLabTestTypes]
+- name: TestPackage
+  operations: [getTestPackages]
+- name: SampleType
+  operations: [getSampleTypes, getClientSampleTypes]
+- name: SampleCategory
+  operations: [getSampleCategories, getClientSampleCategories]
+- name: SampleProductionMethod
+  operations: [getSampleProductionMethods, getClientSampleProductionMethods]
+- name: SampleClassification
+  operations: [getSampleClassifications, getClientSampleClassifications]
+- name: OrderStatus
+  id_field: status_id
+  operations: [getOrderStatuses]
+relationships:
+- from: Order
+  type: belongs_to
+  to: Client
+  via: client_id
+- from: Order
+  type: belongs_to
+  to: Lab
+  via: lab_id
+- from: Order
+  type: has_many
+  to: Sample
+  via: samples
+- from: Order
+  type: belongs_to
+  to: OrderStatus
+  via: status_id
+- from: Sample
+  type: belongs_to
+  to: Order
+  via: order_id
+- from: Sample
+  type: has_many
+  to: TestResult
+  via: test_results
+- from: Sample
+  type: belongs_to
+  to: SampleType
+  via: sample_type
+- from: Sample
+  type: belongs_to
+  to: SampleCategory
+  via: sample_category
+- from: TestResult
+  type: belongs_to
+  to: Sample
+  via: sample_id
+- from: TestResult
+  type: references
+  to: Compound
+  via: compound
+- from: TestResult
+  type: references
+  to: TestType
+  via: test_type
+- from: Client
+  type: has_many
+  to: Order
+  via: client_id
+- from: Lab
+  type: has_many
+  to: Order
+- from: Lab
+  type: has_many
+  to: Client
+- from: Lab
+  type: has_many
+  to: TestType
+  via: getLabTestTypes
+- from: Lab
+  type: has_many
+  to: Compound
+  via: getLabCompounds
+- from: Lab
+  type: has_many
+  to: TestPackage
+  via: getTestPackages

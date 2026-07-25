@@ -1,0 +1,147 @@
+generated: '2026-07-18'
+method: derived
+status: candidate
+source: openapi/confident-lims-clients-openapi.json, openapi/confident-lims-common-openapi.json, openapi/confident-lims-labs-openapi.json
+note: Candidate tool list derived from OpenAPI operations. No official hosted/remote MCP server is published
+  by Confident Cannabis / Confident LIMS as of this pass. They do publish a "Confident API Expert" custom
+  GPT (chatgpt.com) but no MCP endpoint.
+server:
+  name: confident-lims
+  transport: http
+  url: null
+tools:
+- name: getClient
+  description: Get current client information
+  source_operation: openapi/confident-lims-clients-openapi.json#getClient
+- name: getOrders
+  description: List orders
+  source_operation: openapi/confident-lims-clients-openapi.json#getOrders
+- name: getOrderDetails
+  description: Get order details
+  source_operation: openapi/confident-lims-clients-openapi.json#getOrderDetails
+- name: getLabs
+  description: List labs
+  source_operation: openapi/confident-lims-clients-openapi.json#getLabs
+- name: getLabDetails
+  description: Get lab details
+  source_operation: openapi/confident-lims-clients-openapi.json#getLabDetails
+- name: getSamples
+  description: List samples
+  source_operation: openapi/confident-lims-clients-openapi.json#getSamples
+- name: getSampleDetails
+  description: Get sample details
+  source_operation: openapi/confident-lims-clients-openapi.json#getSampleDetails
+- name: getClientSampleTypes
+  description: Get all sample types
+  source_operation: openapi/confident-lims-clients-openapi.json#getClientSampleTypes
+- name: getClientSampleCategories
+  description: Get all sample categories
+  source_operation: openapi/confident-lims-clients-openapi.json#getClientSampleCategories
+- name: getClientSampleProductionMethods
+  description: Get all sample production methods
+  source_operation: openapi/confident-lims-clients-openapi.json#getClientSampleProductionMethods
+- name: getClientSampleClassifications
+  description: Get all sample classifications
+  source_operation: openapi/confident-lims-clients-openapi.json#getClientSampleClassifications
+- name: getCompounds
+  description: Get all compounds
+  source_operation: openapi/confident-lims-common-openapi.json#getCompounds
+- name: getTestTypes
+  description: Get all test types
+  source_operation: openapi/confident-lims-common-openapi.json#getTestTypes
+- name: getSampleTypes
+  description: Get all sample types
+  source_operation: openapi/confident-lims-common-openapi.json#getSampleTypes
+- name: getSampleCategories
+  description: Get all sample categories
+  source_operation: openapi/confident-lims-common-openapi.json#getSampleCategories
+- name: getSampleProductionMethods
+  description: Get all sample production methods
+  source_operation: openapi/confident-lims-common-openapi.json#getSampleProductionMethods
+- name: getSampleClassifications
+  description: Get all sample classifications
+  source_operation: openapi/confident-lims-common-openapi.json#getSampleClassifications
+- name: getOrderStatuses
+  description: Get all order statuses
+  source_operation: openapi/confident-lims-common-openapi.json#getOrderStatuses
+- name: getLab
+  description: Get lab information
+  source_operation: openapi/confident-lims-labs-openapi.json#getLab
+- name: getSamples
+  description: List samples
+  source_operation: openapi/confident-lims-labs-openapi.json#getSamples
+- name: getSampleDetails
+  description: Get sample details
+  source_operation: openapi/confident-lims-labs-openapi.json#getSampleDetails
+- name: editSample
+  description: Edit sample properties
+  source_operation: openapi/confident-lims-labs-openapi.json#editSample
+- name: uploadSampleImage
+  description: Upload sample image
+  source_operation: openapi/confident-lims-labs-openapi.json#uploadSampleImage
+- name: uploadSampleCOA
+  description: Upload Certificate of Analysis
+  source_operation: openapi/confident-lims-labs-openapi.json#uploadSampleCOA
+- name: uploadSampleCOAAddition
+  description: Upload CoA addition file
+  source_operation: openapi/confident-lims-labs-openapi.json#uploadSampleCOAAddition
+- name: submitTestResults
+  description: Submit test results
+  source_operation: openapi/confident-lims-labs-openapi.json#submitTestResults
+- name: adjustWeightOnHand
+  description: Adjust weight on hand
+  source_operation: openapi/confident-lims-labs-openapi.json#adjustWeightOnHand
+- name: getOrders
+  description: List orders
+  source_operation: openapi/confident-lims-labs-openapi.json#getOrders
+- name: createOrder
+  description: Create order
+  source_operation: openapi/confident-lims-labs-openapi.json#createOrder
+- name: getOrderDetails
+  description: Get order details
+  source_operation: openapi/confident-lims-labs-openapi.json#getOrderDetails
+- name: editOrder
+  description: Edit order
+  source_operation: openapi/confident-lims-labs-openapi.json#editOrder
+- name: uploadOrderDocument
+  description: Upload order document
+  source_operation: openapi/confident-lims-labs-openapi.json#uploadOrderDocument
+- name: verifyOrder
+  description: Verify order
+  source_operation: openapi/confident-lims-labs-openapi.json#verifyOrder
+- name: completeOrder
+  description: Complete order
+  source_operation: openapi/confident-lims-labs-openapi.json#completeOrder
+- name: unverifyOrder
+  description: Unverify order
+  source_operation: openapi/confident-lims-labs-openapi.json#unverifyOrder
+- name: reviseOrder
+  description: Revise order
+  source_operation: openapi/confident-lims-labs-openapi.json#reviseOrder
+- name: cancelOrder
+  description: Cancel order
+  source_operation: openapi/confident-lims-labs-openapi.json#cancelOrder
+- name: uncancelOrder
+  description: Uncancel order
+  source_operation: openapi/confident-lims-labs-openapi.json#uncancelOrder
+- name: getTestPackages
+  description: Get test packages
+  source_operation: openapi/confident-lims-labs-openapi.json#getTestPackages
+- name: getLabTestTypes
+  description: Get test types
+  source_operation: openapi/confident-lims-labs-openapi.json#getLabTestTypes
+- name: getLabCompounds
+  description: Get compounds
+  source_operation: openapi/confident-lims-labs-openapi.json#getLabCompounds
+- name: getClients
+  description: List clients
+  source_operation: openapi/confident-lims-labs-openapi.json#getClients
+- name: createClient
+  description: Create client
+  source_operation: openapi/confident-lims-labs-openapi.json#createClient
+- name: getClientDetails
+  description: Get client details
+  source_operation: openapi/confident-lims-labs-openapi.json#getClientDetails
+- name: inviteUserToClient
+  description: Invite user to client
+  source_operation: openapi/confident-lims-labs-openapi.json#inviteUserToClient

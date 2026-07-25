@@ -1,0 +1,89 @@
+# Confident LIMS
+
+> Confident LIMS is a cloud-based Laboratory Information Management System (LIMS) built for high-velocity analytical labs and their testing clients. It streamlines workflows, supports compliance, and enables fast reporting across cannabis testing, food & beverage, environmental, agricultural, nutraceutical, cosmetics, oil & gas, and industrial chemical testing industries.
+
+- Full details for AI & LLMs: https://www.confidentlims.com/llms-full.txt
+
+Confident LIMS combines:
+- **LIMS for Labs**: sample accession → workflow → results → reporting
+- **Testing Network**: client ordering, results delivery, invoicing, and B2B coordination
+- **Client Platform**: ordering + results across multiple labs with exports and API integrations
+- **API for Integrators**: 2-way sync for labs and 1-way sync for clients
+
+## Key facts
+
+- Company: CC Software LLC ("Confident LIMS"), founded 2015, CEO Steve Albarran
+- 100+ labs, 15,000+ active testing clients, +5M yearly samples
+- Pricing: $600–$8,200/month (unlimited users on all plans)
+- Implementation: 2–6 weeks
+- Compliance: ISO 17025, TNI/NELAP, SOC 2, FDA 21 CFR Part 11
+- Contact: hello@confidentlims.com | +1-866-506-5866
+- Demo: https://www.confidentlims.com/get-started
+
+## Primary pages
+
+- Home: https://www.confidentlims.com/
+- Products overview: https://www.confidentlims.com/products-overview
+- Full platform: https://www.confidentlims.com/full-platform
+- Client portal & network: https://www.confidentlims.com/client-portal-and-network
+- Pricing: https://www.confidentlims.com/pricing
+- Get Demo: https://www.confidentlims.com/get-started
+- Contact: https://www.confidentlims.com/contact-us
+- Legacy Products page: https://www.confidentlims.com/products
+- Help center / FAQs: https://help.confidentlims.com/
+
+## Industry solutions
+
+- Solutions overview: https://www.confidentlims.com/solutions
+- Cannabis & hemp: https://www.confidentlims.com/solutions/cannabis-hemp
+- Food & beverage: https://www.confidentlims.com/solutions/food-beverage
+- Agriculture: https://www.confidentlims.com/solutions/agriculture
+- Environmental: https://www.confidentlims.com/solutions/environmental
+- Nutraceuticals & supplements: https://www.confidentlims.com/solutions/nutraceuticals-supplements
+- Cosmetics & personal care: https://www.confidentlims.com/solutions/cosmetics-personal-care
+- Oil & gas: https://www.confidentlims.com/solutions/oil-gas
+- Industrial chemicals: https://www.confidentlims.com/solutions/industrial-chemicals
+- Other testing labs: https://www.confidentlims.com/solutions/other-testing-labs
+
+## AI information
+
+- AI info hub / special AI page: https://www.confidentlims.com/ai-info
+
+## API & developer documentation (public)
+
+- API documentation hub: https://confidentlims.readme.io/
+- API reference index: https://confidentlims.readme.io/reference 
+- API custom GPT: https://chatgpt.com/g/g-693b301b5db4819192e5e6aff37bdb37-confident-api-expert
+- Legacy API documentation (authentication required): https://api.confidentcannabis.com/docs
+
+Key API reference pages:
+- Get current client information: https://confidentlims.readme.io/reference/getclient
+- Get lab details: https://confidentlims.readme.io/reference/getlabdetails
+- List labs: https://confidentlims.readme.io/reference/getlabs
+- Get order details: https://confidentlims.readme.io/reference/getorderdetails
+- List orders: https://confidentlims.readme.io/reference/getorders
+- Get sample details: https://confidentlims.readme.io/reference/getsampledetails
+- List samples: https://confidentlims.readme.io/reference/getsamples
+- Get all compounds: https://confidentlims.readme.io/reference/getcompounds
+- Get all test types: https://confidentlims.readme.io/reference/gettesttypes
+- Submit test results: https://confidentlims.readme.io/reference/submittestresults
+
+## Guides & resources
+
+- Blog index: https://www.confidentlims.com/blog
+- Customer stories: https://www.confidentlims.com/post-categories/customer-stories
+- Guides: https://www.confidentlims.com/post-categories/guide
+- Statement of Compliance with ISO 17025: https://confidentlims.notion.site/Statement-of-Compliance-with-ISO-17025-27717bf1b54a80f38545f89f696341d0
+- SOC 2 Type 1 and Type 2 Readiness Assessment of Compliance: https://confidentlims.notion.site/SOC-2-Type-1-and-Type-2-Readiness-Assessment-of-Compliance-27817bf1b54a80038215daa145556e51
+- FDA 21 CFR Part 11 Self-Attestation of Compliance: https://confidentlims.notion.site/FDA-21-CFR-Part-11-Self-Attestation-of-Compliance-27817bf1b54a80f6abbbcdb143ca7135
+
+Selected high-signal resources:
+- LIMS client portals & customer experience: https://www.confidentlims.com/blog/lims-client-portals-customer-experience
+- Confident Cannabis API integrations: https://www.confidentlims.com/blog/confident-cannabis-api-integrations
+- Zapier integration: https://www.confidentlims.com/blog/zapier-integration
+- METRC tutorial for labs: https://www.confidentlims.com/blog/metrc-tutorial-labs
+
+## Legal
+
+- Privacy policy: https://www.confidentlims.com/privacy
+- Terms of use: https://www.confidentlims.com/terms-of-use

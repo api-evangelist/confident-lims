@@ -1,23 +1,213 @@
 aid: confident-lims
-name: Confident Lims
-description: Confident Lims is a company surfaced as a portfolio company of y-combinator and added to
-  the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment
-  pipeline.
+name: Confident LIMS
+description: >-
+  Confident LIMS (CC Software LLC, formerly Confident Cannabis, founded 2015) is a cloud-based
+  Laboratory Information Management System for high-velocity analytical testing labs and their
+  testing clients. It manages samples from accession through workflow, results, and reporting,
+  automates regulatory compliance (ISO 17025, TNI/NELAP, SOC 2, FDA 21 CFR Part 11), and gives
+  clients a self-service ordering and results portal. It serves cannabis, food & beverage,
+  agriculture, nutraceuticals, cosmetics, environmental, industrial chemicals, and oil & gas
+  labs. The Confident Cannabis REST API (v0, api.confidentcannabis.com) exposes labs, clients,
+  and shared reference data with API-key + HMAC-SHA256 request signing and result webhooks.
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://files.readme.io/ebcaf628c1535f1f7354303ab5d660f8ee74c181042849f2f2954f5c025a3e1d-Brand_Symbol.svg
 url: https://raw.githubusercontent.com/api-evangelist/confident-lims/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - y-combinator
-x-tier: stub
+x-tier: enriched
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
-apis: []
+- LIMS
+- Laboratory Information Management
+- Analytical Testing
+- Cannabis Testing
+- Compliance
+- Sample Management
+- Lab Software
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: confident-lims:confident-lims-client-info-api
+  name: Confident LIMS Client Info API
+  description: Client organization information
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Client Info
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-client-info-api-openapi.yml
+- aid: confident-lims:confident-lims-clients-api
+  name: Confident LIMS Clients API
+  description: Client relationship management
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Clients
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-clients-api-openapi.yml
+- aid: confident-lims:confident-lims-lab-info-api
+  name: Confident LIMS Lab Info API
+  description: Lab organization information
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Lab Info
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-lab-info-api-openapi.yml
+- aid: confident-lims:confident-lims-labs-api
+  name: Confident LIMS Labs API
+  description: View associated labs
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Labs
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-labs-api-openapi.yml
+- aid: confident-lims:confident-lims-order-status-api
+  name: Confident LIMS Order Status API
+  description: Order lifecycle state transitions
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Order Status
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-order-status-api-openapi.yml
+- aid: confident-lims:confident-lims-orders-api
+  name: Confident LIMS Orders API
+  description: View orders and order details
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-orders-api-openapi.yml
+- aid: confident-lims:confident-lims-reference-data-api
+  name: Confident LIMS Reference Data API
+  description: Reference data for sample metadata
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Reference Data
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-reference-data-api-openapi.yml
+- aid: confident-lims:confident-lims-sample-files-api
+  name: Confident LIMS Sample Files API
+  description: Upload sample images and documents
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Sample Files
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-sample-files-api-openapi.yml
+- aid: confident-lims:confident-lims-samples-api
+  name: Confident LIMS Samples API
+  description: View samples and test results
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Samples
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-samples-api-openapi.yml
+- aid: confident-lims:confident-lims-test-results-api
+  name: Confident LIMS Test Results API
+  description: Submit and manage test results
+  humanURL: https://confidentlims.readme.io/reference
+  baseURL: https://api.confidentcannabis.com
+  tags:
+  - Test Results
+  properties:
+  - type: OpenAPI
+    url: openapi/confident-lims-test-results-api-openapi.yml
+common:
+# --- identity / link properties (searched from the provider's site) ---
+- type: DeveloperPortal
+  url: https://confidentlims.readme.io/
+- type: Documentation
+  url: https://confidentlims.readme.io/reference
+- type: APIReference
+  url: https://confidentlims.readme.io/reference
+- type: GettingStarted
+  url: https://www.confidentlims.com/products/api
+- type: Support
+  url: https://help.confidentlims.com/
+- type: Blog
+  url: https://www.confidentlims.com/blog
+- type: Roadmap
+  url: https://feedback.confidentcannabis.com/
+- type: Pricing
+  url: https://www.confidentlims.com/pricing
+- type: SignUp
+  url: https://accounts.confidentlims.com/register
+- type: Login
+  url: https://accounts.confidentlims.com/login
+- type: TermsOfService
+  url: https://www.confidentlims.com/terms-of-use
+- type: PrivacyPolicy
+  url: https://www.confidentlims.com/privacy
+- type: Compliance
+  url: conformance/confident-lims-conformance.yml
+# --- enrichment artifacts ---
+- type: Authentication
+  url: authentication/confident-lims-authentication.yml
+- type: Conventions
+  url: conventions/confident-lims-conventions.yml
+- type: ErrorCatalog
+  url: errors/confident-lims-problem-types.yml
+- type: DataModel
+  url: data-model/confident-lims-data-model.yml
+- type: Lifecycle
+  url: lifecycle/confident-lims-lifecycle.yml
+- type: Conformance
+  url: conformance/confident-lims-conformance.yml
+- type: MCPServer
+  url: mcp/confident-lims-mcp.yml
+- type: LLMsTxt
+  url: llms/confident-lims-llms.txt
+- type: Webhooks
+  url: asyncapi/confident-lims-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/confident-lims-agentic-access.yml
+- type: DomainSecurity
+  url: security/confident-lims-domain-security.yml
+- type: Arazzo
+  name: Lab order to finalized results
+  url: arazzo/confident-lims-lab-order-to-results.yml
+- type: Arazzo
+  name: Client results sync
+  url: arazzo/confident-lims-client-results-sync.yml
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

@@ -1,0 +1,48 @@
+arazzo: 1.0.1
+info:
+  title: Confident LIMS — client results sync
+  version: 1.0.0
+  description: A testing client confirms identity, lists recently changed orders, and pulls
+    the finalized sample details for the first order (read-only client credentials).
+sourceDescriptions:
+- name: clients
+  url: ../openapi/confident-lims-clients-openapi.json
+  type: openapi
+workflows:
+- workflowId: clientResultsSync
+  summary: Confirm the client, list changed orders, and read sample results.
+  inputs:
+    type: object
+    properties:
+      modified_since_time: { type: string }
+      limit: { type: integer }
+  steps:
+  - stepId: getClient
+    operationId: getClient
+  - stepId: getOrders
+    operationId: getOrders
+    parameters:
+    - name: modified_since_time
+      in: query
+      value: $inputs.modified_since_time
+    - name: limit
+      in: query
+      value: $inputs.limit
+    outputs:
+      order_id: $response.body#/orders/0/lab_internal_id
+  - stepId: getOrderDetails
+    operationId: getOrderDetails
+    parameters:
+    - name: order_id
+      in: path
+      value: $steps.getOrders.outputs.order_id
+    outputs:
+      sample_id: $response.body#/samples/0/sample_id
+  - stepId: getSampleDetails
+    operationId: getSampleDetails
+    parameters:
+    - name: sample_id
+      in: path
+      value: $steps.getOrderDetails.outputs.sample_id
+  outputs:
+    sample_id: $steps.getOrderDetails.outputs.sample_id

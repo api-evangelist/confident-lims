@@ -1,0 +1,32 @@
+{
+  "provider": "confident-lims",
+  "sources": [
+    "confident-lims-client-info-api-openapi.yml",
+    "confident-lims-clients-api-openapi.yml",
+    "confident-lims-lab-info-api-openapi.yml",
+    "confident-lims-labs-api-openapi.yml",
+    "confident-lims-order-status-api-openapi.yml",
+    "confident-lims-orders-api-openapi.yml",
+    "confident-lims-reference-data-api-openapi.yml",
+    "confident-lims-sample-files-api-openapi.yml",
+    "confident-lims-samples-api-openapi.yml",
+    "confident-lims-test-results-api-openapi.yml"
+  ],
+  "outputs": [
+    "confident-lims-client-info-api-openapi.yml",
+    "confident-lims-clients-api-openapi.yml",
+    "confident-lims-lab-info-api-openapi.yml",
+    "confident-lims-labs-api-openapi.yml",
+    "confident-lims-order-status-api-openapi.yml",
+    "confident-lims-orders-api-openapi.yml",
+    "confident-lims-reference-data-api-openapi.yml",
+    "confident-lims-sample-files-api-openapi.yml",
+    "confident-lims-samples-api-openapi.yml",
+    "confident-lims-test-results-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

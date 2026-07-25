@@ -1,0 +1,60 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/confident-lims-clients-openapi.json, openapi/confident-lims-common-openapi.json,
+  openapi/confident-lims-labs-openapi.json
+docs: https://confidentlims.readme.io/reference
+# Cross-cutting request/response semantics for the Confident Cannabis / Confident LIMS API.
+authentication:
+  style: api-key + HMAC-SHA256 request signing
+  headers:
+  - X-ConfidentCannabis-APIKey
+  - X-ConfidentCannabis-Signature   # HMAC-SHA256 of the request
+  - X-ConfidentCannabis-Timestamp   # unix seconds, must be within 30s of server time (replay protection)
+  see: authentication/confident-lims-authentication.yml
+idempotency:
+  supported: false
+  note: No Idempotency-Key header or documented idempotency contract. Write operations
+    (createOrder, submitTestResults, uploads) are not documented as idempotent; use the
+    explicit status-transition endpoints (verify/complete/cancel/uncancel) rather than retries.
+pagination:
+  style: offset
+  request_params:
+    start: integer   # offset of the first record to return
+    limit: integer   # maximum number of records to return
+  response_fields:
+    more_results: boolean   # true when additional pages remain
+  applies_to: [getOrders, getSamples, getClients, and other list operations]
+filtering:
+  common_query_params:
+  - modified_since_time   # incremental sync — only records changed since a given time
+  - state                 # US state filter
+  - status_id             # order/sample status filter
+  - client_id             # scope to a testing client
+  - harvest_id
+  - regulator_batch_id
+  incremental_sync: modified_since_time enables polling-free delta pulls (complements webhooks)
+response_envelope:
+  success:
+    media_type: application/json
+    fields: { success: true, "<collection>": array, more_results: boolean }
+  error:
+    media_type: application/json
+    fields: { success: false, error_code: string, error_message: string, error_details: object }
+    see: errors/confident-lims-problem-types.yml
+versioning:
+  style: uri-path
+  current: v0
+  base_path: /v0
+  note: All endpoints are namespaced under /v0 by audience — /v0/labs/*, /v0/clients/*,
+    and shared reference data at /v0/{compounds,testtypes,sampletypes,...}.
+  spec_version: 0.16.0
+rate_limiting:
+  documented: false
+  note: No rate-limit headers or published quotas found in the OpenAPI or public docs.
+webhooks:
+  supported: true
+  note: Results are pushed via configurable webhook URLs the moment they are final (no polling).
+  see: asyncapi/confident-lims-webhooks.yml
+media_types:
+  request: application/json
+  response: [application/json, application/pdf (COA/document downloads), image/* (COA/sample images)]

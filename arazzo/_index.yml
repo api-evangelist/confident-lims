@@ -1,0 +1,12 @@
+generated: '2026-07-18'
+method: derived
+source: arazzo/*.yml
+workflows:
+- file: confident-lims-lab-order-to-results.yml
+  workflowId: labOrderToResults
+  title: Lab order to finalized results
+  summary: Create an order, verify it, submit test results, attach the COA, and complete it.
+- file: confident-lims-client-results-sync.yml
+  workflowId: clientResultsSync
+  title: Client results sync
+  summary: Confirm the client, list changed orders, and read finalized sample results.

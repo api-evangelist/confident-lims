@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: searched
+source: https://www.confidentlims.com/products/api, https://www.confidentlims.com/llms.txt
+spec_type: Webhooks
+# Confident LIMS documents an outbound webhook surface but publishes no AsyncAPI document.
+# Captured as a webhook catalog (type: Webhooks). No event schema is published verbatim; the
+# payload is described as the "complete sample payload and test results".
+delivery:
+  transport: https
+  direction: outbound (provider -> integrator)
+  encryption: HTTPS-encrypted delivery
+  configurable_url: true
+  polling_required: false
+  test_delivery: in-app test deliveries supported
+events:
+- name: sample.results.final
+  description: Fired the moment a sample's test results are finalized. Payload contains the
+    complete sample record and its test results (JSON), enabling result delivery without
+    polling. Complements the getSampleDetails / getSamples read endpoints and the
+    modified_since_time incremental-sync query parameter.
+  payload: complete sample payload + test results (JSON)
+notes: For labs, results can also be pushed to testing clients via configurable webhook URLs.
+  Integrators who cannot receive webhooks can poll getSamples/getOrders with modified_since_time.

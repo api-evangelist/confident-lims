@@ -1,0 +1,49 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/confident-lims-clients-openapi.json, openapi/confident-lims-common-openapi.json,
+  openapi/confident-lims-labs-openapi.json
+# The Confident Cannabis / Confident LIMS API does NOT use RFC 9457 problem+json.
+# Errors are returned as a custom JSON envelope with content-type application/json.
+format: custom-envelope
+envelope:
+  media_type: application/json
+  required: [success, error_code, error_message]
+  fields:
+    success: boolean       # false on error
+    error_code: string     # machine-readable error code
+    error_message: string  # human-readable message
+    error_details: object  # optional, additional context
+problems:
+- status: 400
+  title: Invalid request
+  meaning: The request was malformed, missing required fields, or failed validation.
+  remediation: Check required body/query parameters against the operation schema and resubmit.
+  media_type: application/json
+- status: 401
+  title: Authentication failed
+  meaning: Missing or invalid API key, signature, or timestamp (HMAC signing failed or the
+    timestamp was outside the 30-second window).
+  remediation: Verify the X-ConfidentCannabis-APIKey, X-ConfidentCannabis-Signature, and
+    X-ConfidentCannabis-Timestamp headers; recompute the HMAC-SHA256 signature and resend
+    within 30 seconds of server time.
+  media_type: application/json
+- status: 403
+  title: Access denied
+  meaning: The authenticated credentials do not have permission for the requested resource
+    or operation (e.g. a client key attempting a lab write, or accessing another org's data).
+  remediation: Confirm the credential's role (lab vs testing client) and that it owns the
+    referenced order/sample/lab/client resource.
+  media_type: application/json
+- status: 404
+  title: Resource not found
+  meaning: The referenced order, sample, lab, or client id does not exist or is not visible
+    to the credential.
+  remediation: Verify the path id (order_id / sample_id / lab_id / client_id) is correct.
+  media_type: application/json
+# 400/401/403 are defined on every operation; 404 is defined on the id-addressed operations.
+observed_on:
+- statuses: [400, 401, 403]
+  scope: all operations across clients, common, and labs specs
+- statuses: [404]
+  scope: resource-by-id operations (getOrderDetails, getSampleDetails, getLabDetails,
+    getClientDetails, editSample, editOrder, submitTestResults, status transitions, uploads)

@@ -1,0 +1,47 @@
+generated: '2026-07-18'
+method: searched
+source: openapi/confident-lims-labs-openapi.json, https://www.confidentlims.com/,
+  https://www.confidentlims.com/llms.txt
+# Cross-cutting API/standards conformance (derived from OpenAPI) plus published compliance
+# posture (searched from the provider's site / attestation documents).
+standards:
+- id: apikey-auth
+  conforms: true
+  evidence: openapi securitySchemes type apiKey (X-ConfidentCannabis-APIKey)
+- id: hmac-request-signing
+  conforms: true
+  evidence: HMAC-SHA256 signature + timestamp headers (X-ConfidentCannabis-Signature/-Timestamp)
+- id: oauth2
+  conforms: false
+- id: oidc
+  conforms: false
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: errors use a custom {success,error_code,error_message} envelope, not application/problem+json
+- id: pagination
+  conforms: true
+  evidence: offset pagination (start/limit) with more_results flag
+- id: fhir
+  conforms: false
+- id: odata
+  conforms: false
+- id: json-api
+  conforms: false
+# Published compliance / regulatory posture (the provider publishes attestation documents).
+compliance:
+- id: iso-17025
+  name: ISO/IEC 17025
+  status: statement-of-compliance
+  url: https://confidentlims.notion.site/Statement-of-Compliance-with-ISO-17025-27717bf1b54a80f38545f89f696341d0
+- id: tni-nelap
+  name: TNI / NELAP
+  status: supported
+  evidence: platform markets NELAP/TNI regulatory reporting support
+- id: soc-2
+  name: SOC 2 (Type 1 & Type 2 readiness assessment)
+  status: readiness-assessment
+  url: https://confidentlims.notion.site/SOC-2-Type-1-and-Type-2-Readiness-Assessment-of-Compliance-27817bf1b54a80038215daa145556e51
+- id: fda-21-cfr-part-11
+  name: FDA 21 CFR Part 11
+  status: self-attestation
+  url: https://confidentlims.notion.site/FDA-21-CFR-Part-11-Self-Attestation-of-Compliance-27817bf1b54a80f6abbbcdb143ca7135

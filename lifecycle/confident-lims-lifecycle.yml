@@ -1,0 +1,23 @@
+generated: '2026-07-18'
+method: derived
+source: openapi/confident-lims-labs-openapi.json, https://confidentlims.readme.io/reference
+versioning:
+  scheme: uri-path
+  current: v0
+  spec_version: 0.16.0
+  docs: https://confidentlims.readme.io/reference
+deprecation:
+  policy_url: null
+  sunset_header: false
+  note: No published deprecation policy or RFC 8594 Sunset/Deprecation header support found.
+sla:
+  url: null
+  note: No public SLA / uptime target found.
+status_page:
+  url: null
+  note: No public status page found (status.confidentlims.com / status.confidentcannabis.com
+    do not resolve).
+deprecated_operations: []
+notes: The legacy docs host (api.confidentcannabis.com/docs) coexists with the current ReadMe
+  developer hub (confidentlims.readme.io). Order state is managed through explicit lifecycle
+  transitions rather than versioned resources -- verify, complete, revise, cancel, uncancel.

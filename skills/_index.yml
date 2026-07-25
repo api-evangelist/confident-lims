@@ -1,0 +1,16 @@
+generated: '2026-07-18'
+method: generated
+source: openapi/confident-lims-labs-openapi.json, openapi/confident-lims-clients-openapi.json
+skills:
+- file: confident-lims-submit-test-results.md
+  name: Submit lab test results for a sample
+  api: openapi/confident-lims-labs-openapi.json
+  operations: [getOrders, getOrderDetails, getSampleDetails, submitTestResults, uploadSampleCOA, uploadSampleImage, completeOrder]
+- file: confident-lims-create-order.md
+  name: Onboard a testing client and create an order
+  api: openapi/confident-lims-labs-openapi.json
+  operations: [getClients, createClient, inviteUserToClient, createOrder, getOrderDetails, editOrder, verifyOrder]
+- file: confident-lims-retrieve-client-results.md
+  name: Retrieve your orders, samples, and results as a testing client
+  api: openapi/confident-lims-clients-openapi.json
+  operations: [getClient, getOrders, getOrderDetails, getSamples, getSampleDetails, getLabs, getLabDetails]

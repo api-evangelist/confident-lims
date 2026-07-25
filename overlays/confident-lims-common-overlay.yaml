@@ -1,0 +1,14 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Confident LIMS (Common)
+  version: 1.0.0
+extends: openapi/confident-lims-common-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-network: https://apis.io/provider/confident-lims
+    x-api-audience: common
+    x-auth-style: apiKey+hmac-sha256
+- target: $.info
+  update:
+    x-agentic-access: see agentic-access/confident-lims-agentic-access.yml
