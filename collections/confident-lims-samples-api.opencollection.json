@@ -1,0 +1,224 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Samples API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Samples",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/samples",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of records to skip)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 100)"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order status ID"
+              },
+              {
+                "name": "modified_since_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter samples modified since this timestamp"
+              },
+              {
+                "name": "regulator_batch_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by regulator batch ID"
+              },
+              {
+                "name": "harvest_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by harvest ID"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of samples for the authenticated client. Supports filtering by status, batch ID, harvest ID, and modification time."
+        },
+        {
+          "info": {
+            "name": "Get sample details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/sample/:sample_id",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns detailed information about a specific sample including test results. Sample ID can be lab_internal_id, public_key, or regulator_id_to_attach."
+        },
+        {
+          "info": {
+            "name": "List samples",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/samples",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum records to return (max 100)"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order status ID"
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by client ID"
+              },
+              {
+                "name": "modified_since_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter by modification timestamp"
+              },
+              {
+                "name": "regulator_batch_id",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "harvest_id",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of samples for the authenticated lab. Supports filtering by status, client, batch ID, harvest ID, and modification time."
+        },
+        {
+          "info": {
+            "name": "Get sample details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific sample. Sample ID can be lab_internal_id, public_key, or regulator_id_to_attach."
+        },
+        {
+          "info": {
+            "name": "Edit sample properties",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates editable properties of a sample such as name, strain, batch ID, harvest ID, etc."
+        },
+        {
+          "info": {
+            "name": "Adjust weight on hand",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id/weight_on_hand",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adjusts the weight on hand for a sample with a reason code."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

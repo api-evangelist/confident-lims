@@ -1,0 +1,152 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Order Status API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Order Status",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Verify order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/status/verify",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Moves order from 'Placed' (status_id 1) to 'In Progress' (status_id 3)."
+        },
+        {
+          "info": {
+            "name": "Complete order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/status/complete",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Moves order from 'In Progress' (status_id 3) to 'Completed' (status_id 4)."
+        },
+        {
+          "info": {
+            "name": "Unverify order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/status/unverify",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ]
+          },
+          "docs": "Moves order from 'In Progress' (status_id 3) back to 'Placed' (status_id 1)."
+        },
+        {
+          "info": {
+            "name": "Revise order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/status/revise",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ]
+          },
+          "docs": "Moves order from 'Completed' (status_id 4) back to 'In Progress' (status_id 3)."
+        },
+        {
+          "info": {
+            "name": "Cancel order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/status/cancel",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Moves order to 'Canceled' (status_id 5)."
+        },
+        {
+          "info": {
+            "name": "Uncancel order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/status/uncancel",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ]
+          },
+          "docs": "Moves order from 'Canceled' (status_id 5) back to 'Placed' (status_id 1)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

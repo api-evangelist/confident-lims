@@ -1,0 +1,88 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Labs API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Labs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List labs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/labs",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of records to skip)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 100)"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Filter by state (2-letter state code)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of labs associated with the authenticated client."
+        },
+        {
+          "info": {
+            "name": "Get lab details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/lab/:lab_id",
+            "params": [
+              {
+                "name": "lab_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the lab"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns detailed information about a specific lab."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

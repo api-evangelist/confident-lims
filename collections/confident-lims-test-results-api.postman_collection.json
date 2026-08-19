@@ -1,0 +1,424 @@
+{
+  "item": [
+    {
+      "id": "5f0e8d4f-dd51-4d2e-bcad-7ff0eabf6d0e",
+      "name": "Test Results",
+      "description": {
+        "content": "Submit and manage test results",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "161292b9-e4bb-42dd-8105-0bdf9bfeae0c",
+          "name": "Submit test results",
+          "request": {
+            "name": "Submit test results",
+            "description": {
+              "content": "Submits test results for a sample. Test results are organized by category (cannabinoids, terpenes, pesticides, etc.) with compound data and info fields. All numeric values should be strings to preserve precision. Subsequent submissions overwrite previous data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v0",
+                "labs",
+                "sample",
+                ":sample_id",
+                "test_results"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "sample_id",
+                  "description": "(Required) Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"test_results\": \"<string>\",\n  \"publish_data\": false,\n  \"date_published\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "acf3ca91-e9ae-4b73-a105-2e44601da603",
+              "name": "Test results submitted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "labs",
+                    "sample",
+                    ":sample_id",
+                    "test_results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sample_id",
+                      "description": "(Required) Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ConfidentCannabis-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"test_results\": \"{\\\"categories\\\": {\\\"cannabinoids\\\": {\\\"info_fields\\\": {\\\"input_units\\\": \\\"mg/g\\\", \\\"report_units\\\": \\\"mg/g\\\", \\\"date_tested\\\": \\\"2025-01-15\\\"}, \\\"compounds\\\": [{\\\"name\\\": \\\"thc\\\", \\\"value\\\": \\\"18.5\\\"}, {\\\"name\\\": \\\"cbd\\\", \\\"value\\\": \\\"0.8\\\"}]}}}\",\n  \"publish_data\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "58943f2c-f5d5-43cc-8f2c-78426a8ad649",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "labs",
+                    "sample",
+                    ":sample_id",
+                    "test_results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sample_id",
+                      "description": "(Required) Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ConfidentCannabis-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"test_results\": \"{\\\"categories\\\": {\\\"cannabinoids\\\": {\\\"info_fields\\\": {\\\"input_units\\\": \\\"mg/g\\\", \\\"report_units\\\": \\\"mg/g\\\", \\\"date_tested\\\": \\\"2025-01-15\\\"}, \\\"compounds\\\": [{\\\"name\\\": \\\"thc\\\", \\\"value\\\": \\\"18.5\\\"}, {\\\"name\\\": \\\"cbd\\\", \\\"value\\\": \\\"0.8\\\"}]}}}\",\n  \"publish_data\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error_code\": \"string\",\n  \"error_message\": \"string\",\n  \"error_details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9b350222-eec5-4b50-ac78-98831942e8b3",
+              "name": "Authentication failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "labs",
+                    "sample",
+                    ":sample_id",
+                    "test_results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sample_id",
+                      "description": "(Required) Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ConfidentCannabis-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"test_results\": \"{\\\"categories\\\": {\\\"cannabinoids\\\": {\\\"info_fields\\\": {\\\"input_units\\\": \\\"mg/g\\\", \\\"report_units\\\": \\\"mg/g\\\", \\\"date_tested\\\": \\\"2025-01-15\\\"}, \\\"compounds\\\": [{\\\"name\\\": \\\"thc\\\", \\\"value\\\": \\\"18.5\\\"}, {\\\"name\\\": \\\"cbd\\\", \\\"value\\\": \\\"0.8\\\"}]}}}\",\n  \"publish_data\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error_code\": \"string\",\n  \"error_message\": \"string\",\n  \"error_details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bffde220-fb75-4221-b68e-b0dd4c189a97",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "labs",
+                    "sample",
+                    ":sample_id",
+                    "test_results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sample_id",
+                      "description": "(Required) Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ConfidentCannabis-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"test_results\": \"{\\\"categories\\\": {\\\"cannabinoids\\\": {\\\"info_fields\\\": {\\\"input_units\\\": \\\"mg/g\\\", \\\"report_units\\\": \\\"mg/g\\\", \\\"date_tested\\\": \\\"2025-01-15\\\"}, \\\"compounds\\\": [{\\\"name\\\": \\\"thc\\\", \\\"value\\\": \\\"18.5\\\"}, {\\\"name\\\": \\\"cbd\\\", \\\"value\\\": \\\"0.8\\\"}]}}}\",\n  \"publish_data\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error_code\": \"string\",\n  \"error_message\": \"string\",\n  \"error_details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d1308f1-ad27-422c-833d-dcda981f1035",
+              "name": "Resource not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v0",
+                    "labs",
+                    "sample",
+                    ":sample_id",
+                    "test_results"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "sample_id",
+                      "description": "(Required) Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "X-ConfidentCannabis-APIKey",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"test_results\": \"{\\\"categories\\\": {\\\"cannabinoids\\\": {\\\"info_fields\\\": {\\\"input_units\\\": \\\"mg/g\\\", \\\"report_units\\\": \\\"mg/g\\\", \\\"date_tested\\\": \\\"2025-01-15\\\"}, \\\"compounds\\\": [{\\\"name\\\": \\\"thc\\\", \\\"value\\\": \\\"18.5\\\"}, {\\\"name\\\": \\\"cbd\\\", \\\"value\\\": \\\"0.8\\\"}]}}}\",\n  \"publish_data\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"error_code\": \"string\",\n  \"error_message\": \"string\",\n  \"error_details\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.confidentcannabis.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "X-ConfidentCannabis-APIKey"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "77aecd4b-1106-40f6-b71e-5609d7a3a02e",
+    "name": "Clients Client Info Test Results API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.\n\nContact Support:\n Name: Confident Cannabis API Support",
+      "type": "text/plain"
+    }
+  }
+}

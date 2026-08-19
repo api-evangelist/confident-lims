@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Test Results API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Test Results",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Submit test results",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id/test_results",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submits test results for a sample. Test results are organized by category (cannabinoids, terpenes, pesticides, etc.) with compound data and info fields. All numeric values should be strings to preserve precision. Subsequent submissions overwrite previous data."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

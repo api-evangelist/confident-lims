@@ -1,0 +1,223 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Orders API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/orders",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset (number of records to skip)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of records to return (max 100)"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order status ID (1=Placed, 3=In Progress, 4=Completed, 5=Canceled)"
+              },
+              {
+                "name": "modified_since_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter orders modified since this timestamp (ISO 8601 format)"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a paginated list of orders for the authenticated client. Supports filtering by status and modification time."
+        },
+        {
+          "info": {
+            "name": "Get order details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/order/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "The lab_internal_id of the order"
+              }
+            ],
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns detailed information about a specific order including all samples."
+        },
+        {
+          "info": {
+            "name": "List orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/orders",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum records to return (max 100)"
+              },
+              {
+                "name": "status_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by order status ID"
+              },
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Filter by client ID"
+              },
+              {
+                "name": "modified_since_time",
+                "value": "",
+                "type": "query",
+                "description": "Filter by modification timestamp"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of orders for the authenticated lab."
+        },
+        {
+          "info": {
+            "name": "Create order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new order with one or more samples."
+        },
+        {
+          "info": {
+            "name": "Get order details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific order."
+        },
+        {
+          "info": {
+            "name": "Edit order",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates editable properties of an order."
+        },
+        {
+          "info": {
+            "name": "Upload order document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/order/:order_id/document",
+            "params": [
+              {
+                "name": "order_id",
+                "value": "",
+                "type": "path",
+                "description": "Order identifier (lab_internal_id)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads a document file for an order. Supported formats: csv, pdf, png, jpg, txt, etc. Do NOT include file field in signature."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

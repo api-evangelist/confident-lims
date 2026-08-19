@@ -1,0 +1,123 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Sample Files API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Sample Files",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Upload sample image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id/image",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "subtype",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "set_as_cover",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads an image file for a sample. Supported formats: jpg, jpeg, png, gif, bmp. Can only be uploaded while order is in progress (status_id 3). Do NOT include file fields in signature generation."
+        },
+        {
+          "info": {
+            "name": "Upload Certificate of Analysis",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id/coa",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads a PDF Certificate of Analysis for a sample. Only PDF files are accepted. Can only be uploaded while order is in progress. Do NOT include file field in signature."
+        },
+        {
+          "info": {
+            "name": "Upload CoA addition file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/sample/:sample_id/coa_addition",
+            "params": [
+              {
+                "name": "sample_id",
+                "value": "",
+                "type": "path",
+                "description": "Sample identifier (lab_internal_id, public_key, or regulator_id_to_attach)"
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "file",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Uploads an additional file related to the Certificate of Analysis. Supported formats: pdf, jpg, jpeg, png, gif, bmp. Do NOT include file field in signature."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

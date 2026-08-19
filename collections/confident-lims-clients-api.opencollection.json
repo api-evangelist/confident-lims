@@ -1,0 +1,108 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Client Info Clients API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Clients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List clients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/clients",
+            "params": [
+              {
+                "name": "start",
+                "value": "",
+                "type": "query",
+                "description": "Pagination offset"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum records to return (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns a paginated list of clients associated with this lab."
+        },
+        {
+          "info": {
+            "name": "Create client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/clients",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new client organization for this lab."
+        },
+        {
+          "info": {
+            "name": "Get client details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/client/:client_id",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client"
+              }
+            ]
+          },
+          "docs": "Returns detailed information about a specific client."
+        },
+        {
+          "info": {
+            "name": "Invite user to client",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.confidentcannabis.com/v0/labs/client/:client_id/invite",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the client"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Invites a user to join a client organization with a specified role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

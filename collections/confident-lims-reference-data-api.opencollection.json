@@ -1,0 +1,246 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Clients Client Info Reference Data API",
+    "version": "0.16.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "X-ConfidentCannabis-APIKey",
+      "value": "{{X-ConfidentCannabis-APIKey}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Reference Data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all sample types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/sampletypes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample types (hidden from public documentation)."
+        },
+        {
+          "info": {
+            "name": "Get all sample categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/samplecategories",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample categories (hidden from public documentation)."
+        },
+        {
+          "info": {
+            "name": "Get all sample production methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/sampleproductionmethods",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample production methods (hidden from public documentation)."
+        },
+        {
+          "info": {
+            "name": "Get all sample classifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/clients/sampleclassifications",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample classifications (hidden from public documentation)."
+        },
+        {
+          "info": {
+            "name": "Get all compounds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/compounds",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all compounds and compound synonyms in Confident Cannabis. This includes alternate spellings and synonyms. All compounds listed can be used in test results submission using the `name` parameter. Response is cached for 30 minutes."
+        },
+        {
+          "info": {
+            "name": "Get all test types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/testtypes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all available test types in the system."
+        },
+        {
+          "info": {
+            "name": "Get all sample types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/sampletypes",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample types with their associated categories."
+        },
+        {
+          "info": {
+            "name": "Get all sample categories",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/samplecategories",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample categories."
+        },
+        {
+          "info": {
+            "name": "Get all sample production methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/sampleproductionmethods",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample production/extraction methods."
+        },
+        {
+          "info": {
+            "name": "Get all sample classifications",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/sampleclassifications",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all sample classifications (Indica, Sativa, Hybrid, etc.)."
+        },
+        {
+          "info": {
+            "name": "Get all order statuses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/orderstatuses",
+            "auth": {
+              "type": "apikey",
+              "key": "X-ConfidentCannabis-APIKey",
+              "value": "{{X-ConfidentCannabis-APIKey}}",
+              "placement": "header"
+            }
+          },
+          "docs": "Returns a list of all possible order statuses and their IDs."
+        },
+        {
+          "info": {
+            "name": "Get test packages",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/testpackages"
+          },
+          "docs": "Returns a list of active test packages for this lab."
+        },
+        {
+          "info": {
+            "name": "Get test types",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/testtypes"
+          },
+          "docs": "Returns a list of all available test types (accessible to both labs and clients)."
+        },
+        {
+          "info": {
+            "name": "Get compounds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.confidentcannabis.com/v0/labs/compounds"
+          },
+          "docs": "Returns a list of all compounds (accessible to both labs and clients)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
