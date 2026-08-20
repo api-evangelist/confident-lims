@@ -103,6 +103,8 @@ apis:
   humanURL: https://confidentlims.readme.io/reference
   baseURL: https://api.confidentcannabis.com
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
