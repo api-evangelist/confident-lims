@@ -9,6 +9,18 @@ description: >-
   agriculture, nutraceuticals, cosmetics, environmental, industrial chemicals, and oil & gas
   labs. The Confident Cannabis REST API (v0, api.confidentcannabis.com) exposes labs, clients,
   and shared reference data with API-key + HMAC-SHA256 request signing and result webhooks.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
