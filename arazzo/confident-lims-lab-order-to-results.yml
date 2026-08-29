@@ -2,11 +2,19 @@ arazzo: 1.0.1
 info:
   title: Confident LIMS — lab order to finalized results
   version: 1.0.0
-  description: A lab creates an order for a testing client, verifies it into the workflow,
-    submits test results for a sample, attaches the COA, and completes the order.
+  description: A lab creates an order for a testing client, verifies it into the workflow, submits test results for a sample, attaches the COA, and completes the order.
 sourceDescriptions:
-- name: labs
-  url: ../openapi/confident-lims-labs-openapi.json
+- name: orderStatusApi
+  url: ../openapi/confident-lims-order-status-api-openapi.yml
+  type: openapi
+- name: ordersApi
+  url: ../openapi/confident-lims-orders-api-openapi.yml
+  type: openapi
+- name: sampleFilesApi
+  url: ../openapi/confident-lims-sample-files-api-openapi.yml
+  type: openapi
+- name: testResultsApi
+  url: ../openapi/confident-lims-test-results-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: labOrderToResults
@@ -14,10 +22,10 @@ workflows:
   inputs:
     type: object
     properties:
-      client_id: { type: string }
-      lab_internal_id: { type: string }
-      samples: { type: array }
-      test_results: { type: object }
+      client_id: {type: string}
+      lab_internal_id: {type: string}
+      samples: {type: array}
+      test_results: {type: object}
   steps:
   - stepId: createOrder
     operationId: createOrder

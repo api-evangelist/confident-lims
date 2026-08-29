@@ -2,11 +2,16 @@ arazzo: 1.0.1
 info:
   title: Confident LIMS — client results sync
   version: 1.0.0
-  description: A testing client confirms identity, lists recently changed orders, and pulls
-    the finalized sample details for the first order (read-only client credentials).
+  description: A testing client confirms identity, lists recently changed orders, and pulls the finalized sample details for the first order (read-only client credentials).
 sourceDescriptions:
-- name: clients
-  url: ../openapi/confident-lims-clients-openapi.json
+- name: clientInfoApi
+  url: ../openapi/confident-lims-client-info-api-openapi.yml
+  type: openapi
+- name: ordersApi
+  url: ../openapi/confident-lims-orders-api-openapi.yml
+  type: openapi
+- name: samplesApi
+  url: ../openapi/confident-lims-samples-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: clientResultsSync
@@ -14,8 +19,8 @@ workflows:
   inputs:
     type: object
     properties:
-      modified_since_time: { type: string }
-      limit: { type: integer }
+      modified_since_time: {type: string}
+      limit: {type: integer}
   steps:
   - stepId: getClient
     operationId: getClient
