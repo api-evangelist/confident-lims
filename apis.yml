@@ -163,6 +163,8 @@ apis:
   - type: OpenAPI
     url: openapi/confident-lims-test-results-api-openapi.yml
 common:
+- type: Website
+  url: https://www.confidentlims.com/
 - type: Overlay
   url: overlays/confident-lims-clients-overlay.yaml
 # --- identity / link properties (searched from the provider's site) ---
