@@ -1,32 +1,45 @@
 {
   "provider": "confident-lims",
   "sources": [
-    "confident-lims-client-info-api-openapi.yml",
-    "confident-lims-clients-api-openapi.yml",
-    "confident-lims-lab-info-api-openapi.yml",
-    "confident-lims-labs-api-openapi.yml",
-    "confident-lims-order-status-api-openapi.yml",
-    "confident-lims-orders-api-openapi.yml",
-    "confident-lims-reference-data-api-openapi.yml",
-    "confident-lims-sample-files-api-openapi.yml",
-    "confident-lims-samples-api-openapi.yml",
-    "confident-lims-test-results-api-openapi.yml"
+    "_original/confident-lims-clients-openapi.json",
+    "_original/confident-lims-common-openapi.json",
+    "_original/confident-lims-labs-openapi.json"
   ],
   "outputs": [
     "confident-lims-client-info-api-openapi.yml",
-    "confident-lims-clients-api-openapi.yml",
-    "confident-lims-lab-info-api-openapi.yml",
     "confident-lims-labs-api-openapi.yml",
-    "confident-lims-order-status-api-openapi.yml",
     "confident-lims-orders-api-openapi.yml",
     "confident-lims-reference-data-api-openapi.yml",
-    "confident-lims-sample-files-api-openapi.yml",
     "confident-lims-samples-api-openapi.yml",
+    "confident-lims-clients-api-openapi.yml",
+    "confident-lims-lab-info-api-openapi.yml",
+    "confident-lims-order-status-api-openapi.yml",
+    "confident-lims-sample-files-api-openapi.yml",
     "confident-lims-test-results-api-openapi.yml"
   ],
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (3 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "confident-lims-clients-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "confident-lims-common-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "confident-lims-labs-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "tag 'Orders' spans 2 source specs (confident-lims-clients-openapi.json, confident-lims-labs-openapi.json): per-path servers applied",
+    "tag 'Reference Data' spans 3 source specs (confident-lims-clients-openapi.json, confident-lims-common-openapi.json, confident-lims-labs-openapi.json): per-path servers applied",
+    "tag 'Samples' spans 2 source specs (confident-lims-clients-openapi.json, confident-lims-labs-openapi.json): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "confident-lims-client-info-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-clients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-lab-info-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-labs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-order-status-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-reference-data-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-sample-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-samples-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "confident-lims-test-results-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

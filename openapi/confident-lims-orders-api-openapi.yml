@@ -1,16 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Clients Client Info Orders API
+  title: Confident Lims Orders API
   version: 0.16.0
-  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
   contact:
     name: Confident Cannabis API Support
     url: https://www.confidentcannabis.com
+  description: 'Operations tagged Orders across 2 of this provider''s published API definitions: confident-lims-clients-openapi.json, confident-lims-labs-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.confidentcannabis.com
   description: Production server
-security:
-- ApiKeyAuth: []
 tags:
 - name: Orders
   description: View orders and order details
@@ -232,6 +230,9 @@ paths:
                       type: array
                       items:
                         type: string
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/clients/order/{order_id}:
     get:
       summary: Get order details
@@ -442,6 +443,9 @@ paths:
                       type: array
                       items:
                         type: string
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/orders:
     get:
       summary: List orders
@@ -585,6 +589,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/order:
     post:
       summary: Create order
@@ -761,6 +772,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/order/{order_id}:
     get:
       summary: Get order details
@@ -893,6 +911,10 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
     patch:
       summary: Edit order
       description: Updates editable properties of an order.
@@ -1055,6 +1077,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/order/{order_id}/document:
     post:
       summary: Upload order document
@@ -1174,6 +1203,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1191,3 +1227,6 @@ components:
       in: header
       name: X-ConfidentCannabis-Timestamp
       description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.
+x-refined-from:
+- confident-lims-clients-openapi.json
+- confident-lims-labs-openapi.json

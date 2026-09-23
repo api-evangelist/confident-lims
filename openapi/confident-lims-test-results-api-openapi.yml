@@ -1,8 +1,8 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Clients Client Info Test Results API
+  title: Confident Cannabis API - Lab Endpoints Test Results API
   version: 0.16.0
-  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
+  description: API endpoints for laboratories to manage samples, orders, test results, and client relationships. Includes endpoints for submitting test results, uploading files, and managing order lifecycle.
   contact:
     name: Confident Cannabis API Support
     url: https://www.confidentcannabis.com
@@ -11,6 +11,8 @@ servers:
   description: Production server
 security:
 - ApiKeyAuth: []
+  SignatureAuth: []
+  TimestampAuth: []
 tags:
 - name: Test Results
   description: Submit and manage test results
@@ -161,14 +163,14 @@ components:
       type: apiKey
       in: header
       name: X-ConfidentCannabis-APIKey
-      description: API key for authentication. Required for all requests.
+      description: API key for authentication
     SignatureAuth:
       type: apiKey
       in: header
       name: X-ConfidentCannabis-Signature
-      description: HMAC SHA256 signature of the request. Required if signing is enabled for your API credentials.
+      description: HMAC SHA256 signature (required if signing enabled)
     TimestampAuth:
       type: apiKey
       in: header
       name: X-ConfidentCannabis-Timestamp
-      description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.
+      description: Unix timestamp (required if signing enabled, must be within 30 seconds)

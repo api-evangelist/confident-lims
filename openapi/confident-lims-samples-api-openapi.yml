@@ -1,16 +1,14 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Clients Client Info Samples API
+  title: Confident Lims Samples API
   version: 0.16.0
-  description: API endpoints for clients to view their orders, samples, and associated labs. All endpoints are read-only (GET) and accessible only with client API credentials.
   contact:
     name: Confident Cannabis API Support
     url: https://www.confidentcannabis.com
+  description: 'Operations tagged Samples across 2 of this provider''s published API definitions: confident-lims-clients-openapi.json, confident-lims-labs-openapi.json. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.confidentcannabis.com
   description: Production server
-security:
-- ApiKeyAuth: []
 tags:
 - name: Samples
   description: View samples and test results
@@ -242,6 +240,9 @@ paths:
                       type: array
                       items:
                         type: string
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/clients/sample/{sample_id}:
     get:
       summary: Get sample details
@@ -429,6 +430,9 @@ paths:
                       type: array
                       items:
                         type: string
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/samples:
     get:
       summary: List samples
@@ -580,6 +584,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/sample/{sample_id}:
     get:
       summary: Get sample details
@@ -705,6 +716,10 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
     patch:
       summary: Edit sample properties
       description: Updates editable properties of a sample such as name, strain, batch ID, harvest ID, etc.
@@ -874,6 +889,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
   /v0/labs/sample/{sample_id}/weight_on_hand:
     post:
       summary: Adjust weight on hand
@@ -1027,6 +1049,13 @@ paths:
                     type: string
                   error_details:
                     type: object
+      security:
+      - ApiKeyAuth: []
+        SignatureAuth: []
+        TimestampAuth: []
+    servers:
+    - url: https://api.confidentcannabis.com
+      description: Production server
 components:
   securitySchemes:
     ApiKeyAuth:
@@ -1044,3 +1073,6 @@ components:
       in: header
       name: X-ConfidentCannabis-Timestamp
       description: Unix timestamp of the request. Required if signing is enabled. Must be within 30 seconds of server time.
+x-refined-from:
+- confident-lims-clients-openapi.json
+- confident-lims-labs-openapi.json
