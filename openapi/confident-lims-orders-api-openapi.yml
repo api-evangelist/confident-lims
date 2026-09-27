@@ -450,7 +450,7 @@ paths:
     get:
       summary: List orders
       description: Returns a paginated list of orders for the authenticated lab.
-      operationId: getOrders
+      operationId: getV0LabsOrders
       tags:
       - Orders
       parameters:
@@ -593,6 +593,8 @@ paths:
       - ApiKeyAuth: []
         SignatureAuth: []
         TimestampAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: getOrders
     servers:
     - url: https://api.confidentcannabis.com
       description: Production server
@@ -783,7 +785,7 @@ paths:
     get:
       summary: Get order details
       description: Returns detailed information about a specific order.
-      operationId: getOrderDetails
+      operationId: getV0LabsOrderByOrderId
       tags:
       - Orders
       parameters:
@@ -915,6 +917,8 @@ paths:
       - ApiKeyAuth: []
         SignatureAuth: []
         TimestampAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: getOrderDetails
     patch:
       summary: Edit order
       description: Updates editable properties of an order.

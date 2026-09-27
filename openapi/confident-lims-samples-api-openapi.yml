@@ -437,7 +437,7 @@ paths:
     get:
       summary: List samples
       description: Returns a paginated list of samples for the authenticated lab. Supports filtering by status, client, batch ID, harvest ID, and modification time.
-      operationId: getSamples
+      operationId: getV0LabsSamples
       tags:
       - Samples
       parameters:
@@ -588,6 +588,8 @@ paths:
       - ApiKeyAuth: []
         SignatureAuth: []
         TimestampAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: getSamples
     servers:
     - url: https://api.confidentcannabis.com
       description: Production server
@@ -595,7 +597,7 @@ paths:
     get:
       summary: Get sample details
       description: Returns detailed information about a specific sample. Sample ID can be lab_internal_id, public_key, or regulator_id_to_attach.
-      operationId: getSampleDetails
+      operationId: getV0LabsSampleBySampleId
       tags:
       - Samples
       parameters:
@@ -720,6 +722,8 @@ paths:
       - ApiKeyAuth: []
         SignatureAuth: []
         TimestampAuth: []
+      x-operation-id-source: normalized
+      x-operation-id-original: getSampleDetails
     patch:
       summary: Edit sample properties
       description: Updates editable properties of a sample such as name, strain, batch ID, harvest ID, etc.
