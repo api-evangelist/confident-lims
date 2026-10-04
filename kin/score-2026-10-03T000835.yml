@@ -1,24 +1,22 @@
-# Kin Score artifact — confident-lims — 2026-08-27T140727
+# Kin Score artifact — confident-lims — 2026-10-03T000835
 # The API Evangelist rating (https://github.com/api-evangelist/kin-score). Generated; do not edit.
 ---
 kin_score:
   slug: confident-lims
-  schema_version: 0.15.1
-  scored_at: '2026-08-27'
-  run_ts: 2026-08-27T140727
-  composite: 48.8
+  schema_version: 0.23.0
+  scored_at: '2026-10-03'
+  run_ts: 2026-10-03T000835
+  composite: 46.8
   band: developing
   facets:
-    discoverability: 81.5
-    contract_quality: 67.5
-    governance: 30.3
+    discoverability: 78.6
+    contract_quality: 61.2
+    contract_governance: 18.2
     operational_transparency: 13.2
     developer_ergonomics: 45.8
-    commercial_clarity: 46.1
-    contract_governance: 30.3
     access_clarity: 46.1
   agent_readiness:
-    score: 32.1
+    score: 30.0
     band: agent-ready
     dimensions:
       spec_presence: true
@@ -27,7 +25,7 @@ kin_score:
       mcp_server: false
       auth_clarity: bearer
       idempotency: false
-      error_semantics: documented
+      error_semantics: derived
       openapi_examples: verified
       rate_limit_signal: false
       event_surface_described: true
@@ -40,6 +38,12 @@ kin_score:
       protected_resource_metadata: false
       dynamic_client_registration: false
       agentic_commerce: false
+  regulatory:
+    applies: true
+    regime: Horizontal (data, software, accessibility, platform)
+    regime_id: horizontal
+    score: 29.4
+    matched_via: fallback
   provenance:
     mcp: derived
     skills: derived
