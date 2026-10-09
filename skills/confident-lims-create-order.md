@@ -3,7 +3,7 @@ name: Onboard a testing client and create an order
 description: As a testing lab, create or find a testing client, place a multi-sample order,
   and read it back on the Confident Cannabis / Confident LIMS API.
 api: openapi/confident-lims-labs-openapi.json
-operations: [getClients, createClient, inviteUserToClient, createOrder, getOrderDetails, editOrder, verifyOrder]
+operations: [getClients, createClient, inviteUserToClient, createOrder, getV0LabsOrderByOrderId, editOrder, verifyOrder]
 ---
 
 # Create a client and an order

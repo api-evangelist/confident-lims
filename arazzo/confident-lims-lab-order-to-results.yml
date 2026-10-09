@@ -37,7 +37,7 @@ workflows:
     outputs:
       order_id: $response.body#/order_id
   - stepId: getOrderDetails
-    operationId: getOrderDetails
+    operationId: getV0LabsOrderByOrderId
     parameters:
     - name: order_id
       in: path

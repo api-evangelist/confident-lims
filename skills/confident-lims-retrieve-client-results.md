@@ -3,7 +3,7 @@ name: Retrieve your orders, samples, and results as a testing client
 description: As a testing client, read your account, list orders and samples, and pull
   finalized results and COAs from the Confident Cannabis / Confident LIMS API (read-only).
 api: openapi/confident-lims-clients-openapi.json
-operations: [getClient, getOrders, getOrderDetails, getSamples, getSampleDetails, getLabs, getLabDetails]
+operations: [getClient, getV0LabsOrders, getV0LabsOrderByOrderId, getV0LabsSamples, getV0LabsSampleBySampleId, getLabs, getLabDetails]
 ---
 
 # Retrieve client-side results

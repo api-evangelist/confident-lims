@@ -3,7 +3,7 @@ name: Submit lab test results for a sample
 description: As a testing lab, retrieve an order's samples, submit analytical test results,
   attach the COA, and advance the order to complete on the Confident Cannabis / Confident LIMS API.
 api: openapi/confident-lims-labs-openapi.json
-operations: [getOrders, getOrderDetails, getSampleDetails, submitTestResults, uploadSampleCOA, uploadSampleImage, completeOrder]
+operations: [getV0LabsOrders, getV0LabsOrderByOrderId, getV0LabsSampleBySampleId, submitTestResults, uploadSampleCOA, uploadSampleImage, completeOrder]
 ---
 
 # Submit lab test results

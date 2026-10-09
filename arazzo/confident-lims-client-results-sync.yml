@@ -25,7 +25,7 @@ workflows:
   - stepId: getClient
     operationId: getClient
   - stepId: getOrders
-    operationId: getOrders
+    operationId: getV0LabsOrders
     parameters:
     - name: modified_since_time
       in: query
@@ -36,7 +36,7 @@ workflows:
     outputs:
       order_id: $response.body#/orders/0/lab_internal_id
   - stepId: getOrderDetails
-    operationId: getOrderDetails
+    operationId: getV0LabsOrderByOrderId
     parameters:
     - name: order_id
       in: path
@@ -44,7 +44,7 @@ workflows:
     outputs:
       sample_id: $response.body#/samples/0/sample_id
   - stepId: getSampleDetails
-    operationId: getSampleDetails
+    operationId: getV0LabsSampleBySampleId
     parameters:
     - name: sample_id
       in: path
