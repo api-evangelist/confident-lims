@@ -1,4 +1,4 @@
-# Confident Lims
+# Confident LIMS
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,6 +64,152 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Confident Lims is a company surfaced as a portfolio company of y-combinator and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Confident LIMS (CC Software LLC, formerly Confident Cannabis, founded 2015) is a cloud-based Laboratory Information Management System for high-velocity analytical testing labs and their testing clients. It manages samples from accession through workflow, results, and reporting, automates regulatory compliance (ISO 17025, TNI/NELAP, SOC 2, FDA 21 CFR Part 11), and gives clients a self-service ordering and results portal. It serves cannabis, food & beverage, agriculture, nutraceuticals, cosmetics, environmental, industrial chemicals, and oil & gas labs. The Confident Cannabis REST API (v0, api.confidentcannabis.com) exposes labs, clients, and shared reference data with API-key + HMAC-SHA256 request signing and result webhooks.
 
-Backed by: y-combinator
+**Areas:** Company · LIMS · Laboratory Information Management · Analytical Testing · Cannabis Testing · Compliance · Sample Management · Lab Software
+
+## Confident LIMS on APIs.io
+
+Everything profiled for Confident LIMS is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/confident-lims/](https://apis.io/providers/confident-lims/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Confident LIMS Client Info API](https://apis.io/apis/confident-lims/confident-lims-client-info-api/) — Client organization information
+- [Confident LIMS Clients API](https://apis.io/apis/confident-lims/confident-lims-clients-api/) — Client relationship management
+- [Confident LIMS Lab Info API](https://apis.io/apis/confident-lims/confident-lims-lab-info-api/) — Lab organization information
+- [Confident LIMS Labs API](https://apis.io/apis/confident-lims/confident-lims-labs-api/) — View associated labs
+- [Confident LIMS Order Status API](https://apis.io/apis/confident-lims/confident-lims-order-status-api/) — Order lifecycle state transitions
+- [Confident LIMS Orders API](https://apis.io/apis/confident-lims/confident-lims-orders-api/) — View orders and order details
+- [Confident LIMS Reference Data API](https://apis.io/apis/confident-lims/confident-lims-reference-data-api/) — Reference data for sample metadata
+- [Confident LIMS Sample Files API](https://apis.io/apis/confident-lims/confident-lims-sample-files-api/) — Upload sample images and documents
+- [Confident LIMS Samples API](https://apis.io/apis/confident-lims/confident-lims-samples-api/) — View samples and test results
+- [Confident LIMS Test Results API](https://apis.io/apis/confident-lims/confident-lims-test-results-api/) — Submit and manage test results
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (2)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Confident LIMS — client results sync](https://apis.io/arazzos/confident-lims/confident-lims-client-results-sync/)
+- [Confident LIMS — lab order to finalized results](https://apis.io/arazzos/confident-lims/confident-lims-lab-order-to-results/)
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Confident Lims Webhooks](https://apis.io/asyncapis/confident-lims/confident-lims-webhooks/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [confident-lims](https://apis.io/servers/confident-lims/confident-lims/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Confident Lims Agentic Access](https://apis.io/agentic-access/confident-lims/confident-lims-agentic-access/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Clients Client Info API](https://apis.io/collections/confident-lims/open-confident-lims-client-info-api/)
+- [Client Info Clients API](https://apis.io/collections/confident-lims/open-confident-lims-clients-api/)
+- [Clients Client Info Lab Info API](https://apis.io/collections/confident-lims/open-confident-lims-lab-info-api/)
+- [Clients Client Info Labs API](https://apis.io/collections/confident-lims/open-confident-lims-labs-api/)
+- [Clients Client Info Order Status API](https://apis.io/collections/confident-lims/open-confident-lims-order-status-api/)
+- [Clients Client Info Orders API](https://apis.io/collections/confident-lims/open-confident-lims-orders-api/)
+- [Clients Client Info Reference Data API](https://apis.io/collections/confident-lims/open-confident-lims-reference-data-api/)
+- [Clients Client Info Sample Files API](https://apis.io/collections/confident-lims/open-confident-lims-sample-files-api/)
+- [Clients Client Info Samples API](https://apis.io/collections/confident-lims/open-confident-lims-samples-api/)
+- [Clients Client Info Test Results API](https://apis.io/collections/confident-lims/open-confident-lims-test-results-api/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Confident Lims Clients Overlay](https://apis.io/overlays/confident-lims/confident-lims-clients-overlay/)
+- [Confident Lims Common Overlay](https://apis.io/overlays/confident-lims/confident-lims-common-overlay/)
+- [Confident Lims Labs Overlay](https://apis.io/overlays/confident-lims/confident-lims-labs-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Confident Lims Authentication](https://apis.io/security/confident-lims/confident-lims-authentication/)
+- [Confident Lims Domain Security](https://apis.io/security/confident-lims/confident-lims-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.confidentlims.com/)
+- [Documentation](https://confidentlims.readme.io/reference)
+- [Getting started](https://www.confidentlims.com/products/api)
+- [API reference](https://confidentlims.readme.io/reference)
+- [Pricing](https://www.confidentlims.com/pricing)
+- [Sign up](https://accounts.confidentlims.com/register)
+- [Support](https://help.confidentlims.com/)
+- [Blog](https://www.confidentlims.com/blog)
+- [Terms of service](https://www.confidentlims.com/terms-of-use)
+- [Privacy policy](https://www.confidentlims.com/privacy)
+
+## API Evangelist rating
+
+**Kin Score 46.9** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 78.6 |
+| Contract quality | 61.2 |
+| Contract governance | 18.2 |
+| Operational transparency | 13.2 |
+| Developer ergonomics | 45.8 |
+| Access clarity | 46.1 |
+
+**Agent readiness 29.3** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | — |
+
+**Regulatory alignment 29.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/confident-lims/](https://apis.io/providers/confident-lims/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Confident LIMS: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/confident-lims/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
